@@ -19,7 +19,7 @@
                         {{ __('Questions') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Evaluasi') }}
                     </x-nav-link>
                 </div>
             </div>
