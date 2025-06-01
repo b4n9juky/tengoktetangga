@@ -56,7 +56,7 @@ class SurveyorController extends Controller
 
         return view('admin.surveyor.index', compact('responden'));
     }
-    public function form()
+    public function create()
     {
         return view('surveyors.biodata');
     }
@@ -82,7 +82,7 @@ class SurveyorController extends Controller
             'no_hp' => $request->no_hp,
         ]);
 
-        return redirect('dashbboard.user')->with('success', 'Biodata berhasil disimpan.');
+        return redirect()->route('dashboard.user')->with('success', 'Biodata berhasil disimpan.');
     }
     public function edit()
     {

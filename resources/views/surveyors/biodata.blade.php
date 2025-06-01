@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Isi Biodata</h2>
 
-                <form method="POST" action="{{ route('surveyors.biodata.store') }}" class="space-y-5">
+                <form method="POST" action="{{ route('surveyors.store') }}" class="space-y-5">
                     @csrf
 
                     <div>

@@ -16,9 +16,14 @@ class ObervasiContoller extends Controller
 {
     public function index()
     {
-        $observasi = ObservasiKunjungan::all();
+        $user = Auth::user();
+        $surveyor = $user->surveyor; // Ambil relasi surveyor dari user
+
+        $observasi = ObservasiKunjungan::where('surveyor_id', $surveyor->id)->get();
+
         return view('user.observasi.index', compact('observasi'));
     }
+
     public function create()
     {
         $user = Auth::user();

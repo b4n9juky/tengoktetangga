@@ -24,7 +24,7 @@
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Biodata</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300">Edit Biodata Responden</p>
                             @else
-                            <a href="{{ route('surveyors.biodata.form') }}">
+                            <a href="{{ route('surveyors.create') }}">
                                 <img src="{{ asset('storage/icons/biodata.png') }}" alt="Biodata Icon" class="w-24 h-24 mx-auto mb-4 aspect-square object-contain">
                             </a>
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Biodata Responden</h3>
@@ -35,7 +35,7 @@
                         {{-- Card: Quesioner --}}
                         <div class="rounded-xl shadow-md bg-white dark:bg-gray-700 p-6 text-center transition transform hover:scale-105 hover:shadow-lg">
                             @if ($hasBiodata && !$hasAnswer)
-                            <a href="{{ route('answer.index') }}">
+                            <a href="{{ route('questioners.indexList') }}">
                                 <img src="{{ asset('storage/icons/question.png') }}" alt="Question Icon" class="w-24 h-24 mx-auto mb-4 aspect-square object-contain">
                             </a>
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Kuisioner</h3>
@@ -46,7 +46,7 @@
                             <p class="text-sm text-gray-600 dark:text-gray-300">
                                 Sudah Mengisi Kuisioner
                                 <br>
-                                <a href="#" class="text-blue-600 dark:text-blue-400 underline text-sm">Lihat Kuisioner yang Diikuti</a>
+                                <a href="{{route('questioners.indexList')}}" class="text-blue-600 dark:text-blue-400 underline text-sm">Lihat Kuisioner yang Diikuti</a>
                             </p>
                             @else
                             <div class="cursor-not-allowed opacity-50">

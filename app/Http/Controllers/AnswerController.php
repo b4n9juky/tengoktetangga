@@ -13,7 +13,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-    public function index()
+    public function index($id)
+    {
+        $user = Auth::user();
+        $questions = Question::with('tema')
+            ->where('tema_id', $id)->get();
+
+        return view('user.answer.index', compact('questions'));
+    }
+
+
+    public function home()
     {
         $user = Auth::user();
         $questions = Question::with('choices')->get();
@@ -61,6 +71,8 @@ class AnswerController extends Controller
             ->where('surveyor_id', $surveyor->id)
             ->get();
 
+
+
         // Hitung skor total dan rata-rata per tema
         $scoresByTema = $answers->groupBy('question.tema.id')->map(function ($group) {
             $tema = $group->first()->question->tema;
@@ -85,23 +97,38 @@ class AnswerController extends Controller
 
 
 
-    public function review()
+    public function review($id)
     {
         $user = Auth::user();
         $surveyor = $user->surveyor;
 
-        // Ambil jawaban user beserta relasi question dan choices
         $answers = Answer::with(['question.choices', 'choices'])
             ->where('surveyor_id', $surveyor->id)
+            ->whereHas('question', function ($query) use ($id) {
+                $query->where('tema_id', $id);
+            })
             ->get();
 
         return view('user.answer.review', compact('answers'));
     }
+
     public function edit($id)
     {
-        $surveyor = Surveyor::findOrFail($id); // Ambil surveyor berdasarkan ID yang dikirim
+        // $surveyor = Surveyor::findOrFail($id); // Ambil surveyor berdasarkan ID yang dikirim
+        // $answers = Answer::with(['question.choices', 'choices'])
+        //     ->where('surveyor_id', $surveyor->id)
+        //     ->get();
+
+
+
+        $user = Auth::user();
+        $surveyor = $user->surveyor;
+
         $answers = Answer::with(['question.choices', 'choices'])
             ->where('surveyor_id', $surveyor->id)
+            ->whereHas('question', function ($query) use ($id) {
+                $query->where('tema_id', $id);
+            })
             ->get();
 
         return view('user.answer.edit', compact('answers', 'surveyor'));
@@ -120,6 +147,15 @@ class AnswerController extends Controller
             }
         }
 
-        return redirect()->route('answer.review')->with('success', 'Jawaban berhasil diperbarui!');
+        return redirect()->route('answer.indexKuisioner')->with('success', 'Jawaban berhasil diperbarui!');
+    }
+    public function answersByTema($id)
+    {
+        // Ambil semua jawaban yang terkait dengan tema tertentu
+        $answers = Answer::whereHas('question', function ($query) use ($id) {
+            $query->where('tema_id', $id);
+        })->with(['question.tema', 'choices'])->get();
+
+        return view('answers.by-tema', compact('answers'));
     }
 }

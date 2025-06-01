@@ -24,6 +24,34 @@ class QuestionController extends Controller
             return view('questions.index', compact('questions'));
         }
     }
+
+    public function indexList()
+    {
+
+        $user = Auth::user();
+        $surveyor = $user->surveyor;
+
+        // Ambil semua tema yang dibuat admin
+        $allTemas = TemaKuisioner::all();
+
+        // Ambil tema yang sudah pernah dikerjakan surveyor
+        $answeredTemaIds = Answer::where('surveyor_id', $surveyor->id)
+            ->with('question.tema')
+            ->get()
+            ->pluck('question.tema.id')
+            ->unique();
+
+        // Filter tema yang belum pernah dikerjakan surveyor
+        $unansweredTemas = $allTemas->filter(function ($tema) use ($answeredTemaIds) {
+            return !$answeredTemaIds->contains($tema->id);
+        })->values();
+
+        return view('user.questioner.list', compact('unansweredTemas'));
+    }
+
+
+
+
     public function create()
     {
         $temaList = TemaKuisioner::all();

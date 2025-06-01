@@ -20,4 +20,8 @@ class ObservasiKunjungan extends Model
     {
         return $this->hasMany(Dokumentasi::class);
     }
+    public function surveyor()
+    {
+        return $this->belongsTo(Surveyor::class);
+    }
 }

@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="shrink-0">
-                    <a href="{{ route('answer.review', $surveyor->surveyor_id) }}"
+                    <a href="{{ route('answer.review', $item['tema']->id) }}"
                         class="inline-flex items-center gap-1 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-700 transition">
                         <i data-feather="eye" class="w-4 h-4"></i>
                         Lihat

@@ -61,7 +61,7 @@
                         @endif
                         <p class="text-sm text-blue-600">Klik tombol di bawah untuk mulai mengisi kuesioner.</p>
                     </div>
-                    <a href="{{route('answer.edit',$answer->surveyor_id)}}" class="mt-4 sm:mt-0 inline-block bg-blue-600 text-white text-sm font-medium px-6 py-3 rounded-xl hover:bg-blue-700 transition-all duration-200">
+                    <a href="{{route('answer.edit',$answer->question->tema_id)}}" class="mt-4 sm:mt-0 inline-block bg-blue-600 text-white text-sm font-medium px-6 py-3 rounded-xl hover:bg-blue-700 transition-all duration-200">
                         Revisi Jawaban Kuesioner
 
                     </a>
