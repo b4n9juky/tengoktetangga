@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Tambah Pertanyaan Baru
+            Tambah Pertanyaan Baru Quesioner Siswa
         </h2>
     </x-slot>
 
@@ -14,7 +14,7 @@
                 </div>
                 @endif
 
-                <form method="POST" action="{{ route('questions.store') }}">
+                <form method="POST" action="{{ route('survey.storeQuestion') }}">
                     @csrf
 
                     <div class="mb-4">
@@ -42,15 +42,6 @@
                         <button type="button" onclick="addChoice()" class="mt-2 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 text-sm">+ Tambah Jawaban</button>
                     </div>
 
-                    <div class="mb-4">
-                        <label for="kategori_id" class="block font-medium text-sm text-gray-700">Kategori Survey</label>
-                        <select name="kategori_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                            <option value="">-- Pilih Kategori --</option>
-                            @foreach($kategoriList as $kategori)
-                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Simpan Pertanyaan</button>
                 </form>

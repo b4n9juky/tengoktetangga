@@ -8,7 +8,7 @@ class Question extends Model
 {
 
     protected $table = 'questions';
-    protected $fillable = ['text', 'type', 'bobot', 'kategori_id'];
+    protected $fillable = ['text', 'type', 'tema_id'];
 
     public function options()
     {
@@ -16,9 +16,9 @@ class Question extends Model
     }
 
     // relasi model Question dengan model Answer
-    public function kategori()
+    public function tema()
     {
-        return $this->belongsTo(KategoriSurvey::class, 'kategori_id');
+        return $this->belongsTo(TemaKuisioner::class, 'tema_id');
     }
     public function choices()
     {

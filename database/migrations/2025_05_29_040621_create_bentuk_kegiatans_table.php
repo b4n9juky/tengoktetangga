@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kategori_surveys', function (Blueprint $table) {
+        Schema::create('bentuk_kegiatans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kategori');
+            $table->string('nama_bentuk');
             $table->text('deskripsi')->nullable();
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
+            $table->boolean('is_approved')->default(false); // disetujui oleh admin atau koordinator
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori_surveys');
+        Schema::dropIfExists('bentuk_kegiatans');
     }
 };

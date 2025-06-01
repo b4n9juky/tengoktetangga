@@ -5,25 +5,46 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard.admin') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+
+                    @if (Auth::user()->role === \App\Enums\UserRole::ADMIN)
+                    <x-nav-link :href="route('dashboard.admin')" :active="request()->routeIs('dashboard.admin')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.index')">
                         {{ __('Questions') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Evaluasi') }}
+                    <x-nav-link :href="route('surveyor.index')" :active="request()->routeIs('surveyor.index')">
+                        {{ __('Responden') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Pengaturan') }}
+                    <x-nav-link :href="route('tema.home')" :active="request()->routeIs('tema.home')">
+                        {{ __('Tema Kuisioner') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('kegiatan.home')" :active="request()->routeIs('kegiatan.home')">
+                        {{ __('Kegiatan') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('kegiatan.bentuk')" :active="request()->routeIs('kegiatan.bentuk')">
+                        {{ __('Bentuk Kegiatan') }}
+                    </x-nav-link>
+
+                    @endif
+
+                    @if (Auth::user()->role->value ==='pelaksana')
+                    <x-nav-link :href="route('dashboard.user')" :active="request()->routeIs('dashboard.user')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    @endif
+
+
+
+
                 </div>
             </div>
 
@@ -76,7 +97,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard.admin')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

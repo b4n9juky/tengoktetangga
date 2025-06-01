@@ -9,6 +9,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h3>Form Survey</h3>
+                    <a href="{{ route('survey.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded mb-4 inline-block">+ Tambah Pertanyaan</a>
                     <form action="{{ route('survey.store') }}" method="POST">
                         @csrf
 

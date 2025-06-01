@@ -28,4 +28,9 @@ class Answer extends Model
     {
         return $this->belongsToMany(Option::class);
     }
+
+    public function choices()
+    {
+        return $this->belongsToMany(Choice::class, 'answer_choice');
+    }
 }
