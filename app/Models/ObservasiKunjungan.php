@@ -18,7 +18,7 @@ class ObservasiKunjungan extends Model
     ];
     public function dokumentasis()
     {
-        return $this->hasMany(Dokumentasi::class);
+        return $this->hasMany(Dokumentasi::class, 'observasikunjungan_id');
     }
     public function surveyor()
     {

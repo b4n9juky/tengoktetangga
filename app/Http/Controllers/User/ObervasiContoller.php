@@ -40,7 +40,7 @@ class ObervasiContoller extends Controller
             'alamat' => 'required|string',
             'kondisi_teramati' => 'required|string',
             'bentuk_interaksi' => 'required|string',
-            'catatan_tambahan' => 'required|string',
+            'catatan_tambahan' => 'nullable|string',
 
         ]);
 
@@ -51,11 +51,6 @@ class ObervasiContoller extends Controller
         return redirect()->route('observasi.index')->with('success', 'Observasi Kunjungan berhasil disimpan.');
     }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([]);
-        ObservasiKunjungan::create($request->save());
-    }
 
     public function showForm($id)
     {
@@ -86,5 +81,52 @@ class ObervasiContoller extends Controller
 
         return back()->with('success', 'Foto berhasil diupload!')->with('url', $url);
     }
-    public function destroy($id) {}
+    public function edit($id)
+    {
+        $observasi = ObservasiKunjungan::findOrfail($id);
+        return view('user.observasi.edit', compact('observasi'));
+    }
+    public function update(Request $request, $id)
+    {
+
+        // dd('it works');
+        $update = $request->validate([
+            'surveyor_id' => 'required|exists:surveyors,id',
+            'tanggal_kunjungan' => 'required|date',
+            'nama_tetangga' => 'required|string',
+            'alamat' => 'required|string',
+            'kondisi_teramati' => 'required|string',
+            'bentuk_interaksi' => 'required|string',
+            'catatan_tambahan' => 'nullable|string',
+
+
+        ]);
+
+        $observasi = ObservasiKunjungan::find($id);
+
+        if (!$observasi) {
+            return back()->withErrors(['error' => 'ID Observasi Kunjungan tidak ditemukan']);
+        }
+
+        $observasi->update($update);
+        return redirect()->route('observasi.index')->with('success', 'Data Berhasil di perbaharui');
+    }
+    public function destroy($id)
+    {
+        $observasi = ObservasiKunjungan::findOrfail($id);
+
+        // dd($observasi);
+        $observasi->destroy($id);
+        return redirect()->route('observasi.index')->with('success', 'Data berhasil di hapus');
+    }
+    public function getData()
+    {
+        $observasi = ObservasiKunjungan::with('surveyor')->get();
+        return view('admin.observasi.index', compact('observasi'));
+    }
+    public function getDetail($id)
+    {
+        $observasi = ObservasiKunjungan::with('dokumentasis')->findOrFail($id);
+        return view('admin.observasi.details', compact('observasi'));
+    }
 }

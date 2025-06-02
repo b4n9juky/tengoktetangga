@@ -15,12 +15,7 @@
                         <span>Daftar Pertanyaan</span>
                     </h3>
 
-                    <a href="{{ route('questions.create') }}"
-                        class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-indigo-700 hover:to-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition duration-300 flex items-center space-x-2">
-                        <i data-feather="plus-circle"></i>
-                        <span>Buat Pertanyaan</span>
-                    </a>
-                    <form method="GET" action="{{ route('questions.index') }}" class="mb-6">
+                    <form method="GET" action="#" class="mb-6">
                         <div class="flex space-x-2">
                             <input type="text" name="search" placeholder="Cari pertanyaan..."
                                 value="{{ request('search') }}"
@@ -35,12 +30,18 @@
                 </div>
 
                 <ul class="space-y-4">
-                    @forelse($questions as $row)
+                    @forelse($q as $row)
                     <li class="p-4 bg-gray-50 dark:bg-gray-900 rounded-md shadow-sm hover:shadow-md transition-all">
                         <div class="flex items-start space-x-2 text-gray-800 dark:text-gray-100">
                             <i data-feather="check-circle" class="mt-1 text-green-500"></i>
                             <div>
-                                <p class="font-medium">{{ $loop->iteration }}. {{ $row->text }}</p>
+                                <p class="font-medium">{{ $loop->iteration }}. {{ $row->text }}
+
+
+
+
+                                </p>
+
                                 @if($row->choices->count() > 0)
                                 <ul class="mt-2 pl-5 list-disc text-sm text-gray-600 dark:text-gray-300 space-y-1">
                                     @foreach($row->choices as $index => $choice)
@@ -51,14 +52,19 @@
                                     @endforeach
                                 </ul>
                                 @endif
+
+
+
                             </div>
+                            <a href="{{route('tema.showDetails', $row->id)}}" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-200 p-1.5 rounded hover:bg-indigo-50 dark:hover:bg-indigo-800"
+                                title="Details"> <i data-feather="zoom-in"></i></a>
                         </div>
                     </li>
                     @empty
                     <p class="text-gray-500 dark:text-gray-300 text-center italic">Belum ada pertanyaan dibuat.</p>
                     @endforelse
                     <div class="mt-6">
-                        {{ $questions->links() }}
+
                     </div>
                 </ul>
             </div>

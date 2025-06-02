@@ -20,21 +20,17 @@
                     <x-nav-link :href="route('dashboard.admin')" :active="request()->routeIs('dashboard.admin')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('questions.index')" :active="request()->routeIs('questions.index')">
-                        {{ __('Questions') }}
-                    </x-nav-link>
+
                     <x-nav-link :href="route('surveyor.index')" :active="request()->routeIs('surveyor.index')">
                         {{ __('Responden') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('tema.home')" :active="request()->routeIs('tema.home')">
+                    <x-nav-link :href="route('tema')" :active="request()->routeIs('tema')">
                         {{ __('Tema Kuisioner') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('kegiatan.home')" :active="request()->routeIs('kegiatan.home')">
-                        {{ __('Kegiatan') }}
+                    <x-nav-link :href="route('admin.observasi')" :active="request()->routeIs('admin.observasi')">
+                        {{ __('Observasi') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('kegiatan.bentuk')" :active="request()->routeIs('kegiatan.bentuk')">
-                        {{ __('Bentuk Kegiatan') }}
-                    </x-nav-link>
+
 
 
                 </div>

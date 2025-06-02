@@ -18,9 +18,7 @@ Route::get('/', function () {
     return view('beranda');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified', 'role:admin'])->name('dashboard');
+
 
 Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::get('/dashboard/user', [DashboardUser::class, 'index'])->name('dashboard.user');
@@ -40,19 +38,7 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::get('/answer/indexes', [AnswerController::class, 'indexKuisioner'])->name('answer.indexKuisioner');
     // Route::get('/kuisioner/show', [AnswerController::class, 'indexKuisioner'])->name('kuisioner.show');
     Route::get('/tema/{id}/answers', [AnswerController::class, 'answersByTema'])->name('tema.answers');
-
-
-
-    // Route::post('/questions/store', [QuestionController::class, 'store'])->name('questions.store');
-    // Route::post('/questions/answer', [QuestionController::class, 'storeJawaban'])->name('questions.answer');
-    // Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
-    // Route::post('/questions/{id}/update', [QuestionController::class, 'update'])->name('questions.update');
-
     Route::get('/questioner/indexList', [QuestionController::class, 'indexList'])->name('questioners.indexList');
-
-    // Route::get('/questions/review', [QuestionController::class, 'review'])->name('questions.review');
-
-
     Route::get('/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answer.edit');
     Route::post('/answer/{id}/update', [AnswerController::class, 'update'])->name('answer.update');
     Route::get('/observasi', [ObervasiContoller::class, 'index'])->name('observasi.index');
@@ -75,22 +61,43 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::delete('/kegiatan/{id}/delete', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 });
 
-// dashboard admin
+
+
+
+
+// dashboard admin//
 
 
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('dashboard.admin');
     Route::get('/questions/index', [QuestionController::class, 'index'])->name('questions.index');
-    Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
-    Route::post('/questions/store', [QuestionController::class, 'store'])->name('questions.store');
+    // Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+    // Route::post('/questions/store', [QuestionController::class, 'store'])->name('questions.store');
 
+    //state form pertanyaan
+    Route::get('/tema/{tema}/questions/create', [QuestionController::class, 'create'])->name('questions.create');
+    Route::post('/tema/{tema}/questions', [QuestionController::class, 'store'])->name('questions.store');
+
+
+
+
+    // tema kuisioner
+    Route::get('/tema/', [TemaKuisionerController::class, 'index'])->name('tema');
+    Route::get('/tema/create', [TemaKuisionerController::class, 'create'])->name('tema.create');
+    Route::post('/tema/store', [TemaKuisionerController::class, 'store'])->name('tema.store');
+    Route::get('/tema/{id}/edit', [TemaKuisionerController::class, 'edit'])->name('tema.edit');
+    Route::post('/tema/{id}/edit', [TemaKuisionerController::class, 'update'])->name('tema.update');
+    Route::delete('/tema/{id}/delete', [TemaKuisionerController::class, 'destroy'])->name('tema.destroy');
+    Route::get('/tema/{id}/showquestions', [TemaKuisionerController::class, 'showQuestions'])->name('tema.showQuestions');
+    Route::get('/tema/{id}/showdetails', [TemaKuisionerController::class, 'showDetails'])->name('tema.showDetails');
+
+    // observasi
+    Route::get('/admin/observasi/', [ObervasiContoller::class, 'getData'])->name('admin.observasi');
+    Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
 
 
     Route::get('/surveyor/home', [SurveyorController::class, 'index'])->name('surveyor.index');
-
-
-    Route::get('/tema/', [TemaKuisionerController::class, 'index'])->name('tema.home');
 });
 
 Route::middleware('auth')->group(function () {

@@ -8,6 +8,12 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="bg-white dark:bg-gray-800 dark:text-gray-200 p-6 rounded-2xl shadow-lg">
+
+                @if (session('success'))
+                <x-alert type="success" title="Berhasil!" :message="session('success')" />
+                @endif
+
+
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold flex items-center gap-2">
                         <i data-feather="clipboard"></i>
@@ -21,6 +27,10 @@
 
                 @if ($observasi->count() > 0)
                 <div class="overflow-x-auto rounded-lg shadow-sm">
+
+
+
+
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                         <thead class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100">
                             <tr>
@@ -87,4 +97,11 @@
             }
         });
     </script>
+    <script>
+        setTimeout(() => {
+            const alert = document.querySelector('.alert');
+            if (alert) alert.remove();
+        }, 3000); // 3 detik
+    </script>
+
 </x-app-layout>

@@ -12,18 +12,39 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-    public function index()
+    // public function index()
+    // {
+    //     $user = Auth::user();
+    //     $questions = Question::with('choices')->get();
+
+    //     if ($user->role->value === 'admin') {
+    //         return view('admin.questions.index', compact('questions'));
+    //     } else {
+
+    //         return view('questions.index', compact('questions'));
+    //     }
+    // }
+
+    // versi data tables
+    public function index(Request $request)
     {
         $user = Auth::user();
-        $questions = Question::with('choices')->get();
+        $search = $request->input('search');
+
+        $questions = Question::with('choices')
+            ->when($search, function ($query, $search) {
+                $query->where('text', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString(); // agar pagination tetap menyimpan query pencarian
 
         if ($user->role->value === 'admin') {
-            return view('admin.questions.index', compact('questions'));
+            return view('admin.questions.index', compact('questions', 'search'));
         } else {
-
-            return view('questions.index', compact('questions'));
+            return view('questions.index', compact('questions', 'search'));
         }
     }
+
 
     public function indexList()
     {
@@ -52,31 +73,70 @@ class QuestionController extends Controller
 
 
 
-    public function create()
+    // public function create()
+    // {
+    //     $temaList = TemaKuisioner::all();
+    //     return view('admin.questions.create', compact('temaList'));
+    // }
+
+
+
+
+    public function create($temaId)
     {
-        $temaList = TemaKuisioner::all();
-        return view('admin.questions.create', compact('temaList'));
+        $tema = TemaKuisioner::findOrFail($temaId);
+
+
+        $questions = Question::where('tema_id', $temaId)->latest()->get();
+
+        return view('admin.questions.create', compact('tema', 'questions'));
     }
 
 
+    // public function store(Request $request)
+    // {
 
 
-    public function store(Request $request)
+    //     $validated = $request->validate([
+    //         'text' => 'required|string',
+    //         'type' => 'required|in:short_answer,multiple_choice',
+    //         'tema_id' => 'required|exists:tema_quisioners,id',
+    //     ]);
+
+    //     $question = Question::create([
+    //         'text' => $validated['text'],
+    //         'type' => $validated['type'],
+    //         'tema_id' => $validated['tema_id'],
+    //     ]);
+
+    //     if ($validated['type'] === 'multiple_choice' && $request->has('choices')) {
+    //         foreach ($request->choices as $index => $choiceText) {
+    //             if (trim($choiceText) !== '') {
+    //                 $question->choices()->create([
+    //                     'text' => $choiceText,
+    //                     'bobot' => $request->bobot_choices[$index] ?? 1,
+    //                 ]);
+    //             }
+    //         }
+    //     }
+
+    //     return redirect()->route('questions.index')->with('success', 'Pertanyaan berhasil disimpan.');
+    // }
+
+
+
+    public function store(Request $request, $temaId)
     {
-
-
         $validated = $request->validate([
             'text' => 'required|string',
             'type' => 'required|in:short_answer,multiple_choice',
-            'tema_id' => 'required|exists:tema_quisioners,id',
         ]);
 
         $question = Question::create([
             'text' => $validated['text'],
             'type' => $validated['type'],
-            'tema_id' => $validated['tema_id'],
+            'tema_id' => $temaId,
         ]);
-
         if ($validated['type'] === 'multiple_choice' && $request->has('choices')) {
             foreach ($request->choices as $index => $choiceText) {
                 if (trim($choiceText) !== '') {
@@ -88,7 +148,8 @@ class QuestionController extends Controller
             }
         }
 
-        return redirect()->route('questions.index')->with('success', 'Pertanyaan berhasil disimpan.');
+        return redirect()->route('questions.create', $temaId)
+            ->with('success', 'Pertanyaan berhasil ditambahkan');
     }
     public function storeJawaban(Request $request)
     {
