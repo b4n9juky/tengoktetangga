@@ -12,7 +12,7 @@ class SurveyController extends Controller
 {
     public function index()
     {
-        $questions = Question::with('options')->get();
+        $questions = Question::with('choice')->get();
         return view('survey.index', compact('questions'));
     }
     public function create()

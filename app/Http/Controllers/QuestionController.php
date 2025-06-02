@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
-    // public function index()
-    // {
-    //     $user = Auth::user();
-    //     $questions = Question::with('choices')->get();
+    public function indexHome()
+    {
+        $user = Auth::user();
+        $questions = Question::with('choices')->get();
 
-    //     if ($user->role->value === 'admin') {
-    //         return view('admin.questions.index', compact('questions'));
-    //     } else {
+        if ($user->role->value === 'admin') {
+            return view('admin.questions.index', compact('questions'));
+        } else {
 
-    //         return view('questions.index', compact('questions'));
-    //     }
-    // }
+            return view('questions.index', compact('questions'));
+        }
+    }
 
     // versi data tables
     public function index(Request $request)
@@ -189,5 +189,30 @@ class QuestionController extends Controller
             ->get();
 
         return view('questions.review', compact('answers'));
+    }
+    // app/Http/Controllers/QuestionController.php
+
+    public function edit($id)
+    {
+        $question = Question::with('choices')->findOrFail($id);
+        return view('admin.questions.edit', compact('question'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $question = Question::findOrFail($id);
+        $question->update(['text' => $request->question_text]);
+
+        foreach ($request->choices as $choiceData) {
+            $choice = Choice::find($choiceData['id']);
+            if ($choice && $choice->question_id == $question->id) {
+                $choice->update([
+                    'text' => $choiceData['text'],
+                    'bobot' => $choiceData['bobot'],
+                ]);
+            }
+        }
+
+        return redirect()->route('tema')->with('success', 'Soal dan pilihan berhasil diperbarui.');
     }
 }

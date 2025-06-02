@@ -58,6 +58,8 @@
                             </div>
                             <a href="{{route('tema.showDetails', $row->id)}}" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-200 p-1.5 rounded hover:bg-indigo-50 dark:hover:bg-indigo-800"
                                 title="Details"> <i data-feather="zoom-in"></i></a>
+                            <a href="{{route('questions.edit', $row->id)}}" class="text-indigo-600 hover:text-indigo-800 transition-colors duration-200 p-1.5 rounded hover:bg-indigo-50 dark:hover:bg-indigo-800"
+                                title="Details"> <i data-feather="edit-2"></i></a>
                         </div>
                     </li>
                     @empty

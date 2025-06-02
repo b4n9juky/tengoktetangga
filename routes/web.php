@@ -72,8 +72,8 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('dashboard.admin');
     Route::get('/questions/index', [QuestionController::class, 'index'])->name('questions.index');
-    // Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
-    // Route::post('/questions/store', [QuestionController::class, 'store'])->name('questions.store');
+
+
 
     //state form pertanyaan
     Route::get('/tema/{tema}/questions/create', [QuestionController::class, 'create'])->name('questions.create');
@@ -92,12 +92,16 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/tema/{id}/showquestions', [TemaKuisionerController::class, 'showQuestions'])->name('tema.showQuestions');
     Route::get('/tema/{id}/showdetails', [TemaKuisionerController::class, 'showDetails'])->name('tema.showDetails');
 
+    // update questions 
+    Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
+    Route::post('/questions/{id}/update', [QuestionController::class, 'update'])->name('questions.update');
+
     // observasi
     Route::get('/admin/observasi/', [ObervasiContoller::class, 'getData'])->name('admin.observasi');
     Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
 
 
-    Route::get('/surveyor/home', [SurveyorController::class, 'index'])->name('surveyor.index');
+    Route::get('/responden', [SurveyorController::class, 'index'])->name('surveyor.index');
 });
 
 Route::middleware('auth')->group(function () {

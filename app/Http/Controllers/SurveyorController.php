@@ -66,23 +66,29 @@ class SurveyorController extends Controller
         $request->validate([
             'nama' => 'required|string|max:100',
             'kelas' => 'required|string',
-
             'alamat' => 'required|string',
             'no_hp' => 'required|string',
         ]);
 
-        $user = Auth::user(); // atau auth()->user()
+        $user = Auth::user();
 
+        // Cek apakah user sudah pernah mengisi biodata
+        if (Surveyor::where('user_id', $user->id)->exists()) {
+            return redirect()->route('dashboard.user')
+                ->with('error', 'Anda sudah pernah mengisi biodata.');
+        }
+
+        // Simpan data biodata surveyor
         Surveyor::create([
             'user_id' => $user->id,
             'nama' => $request->nama,
             'kelas' => $request->kelas,
-
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
         ]);
 
-        return redirect()->route('dashboard.user')->with('success', 'Biodata berhasil disimpan.');
+        return redirect()->route('dashboard.user')
+            ->with('success', 'Biodata berhasil disimpan.');
     }
     public function edit()
     {
