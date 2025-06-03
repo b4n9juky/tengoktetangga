@@ -37,18 +37,19 @@
                         </div>
 
                         <div>
-                            <label for="kondisi_teramati" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kondisi Teramati</label>
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kondisi Teramati</label>
 
                                 <div id="kondisi-container" class="space-y-3">
-                                    <div class="flex space-x-2">
+                                    <div class="flex space-x-2 items-center">
                                         <select name="kondisi_teramati[]" class="w-2/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
                                             @foreach ($kondisis as $kondisi)
                                             <option value="{{ $kondisi->id }}">{{ $kondisi->nama }}</option>
                                             @endforeach
                                         </select>
                                         <input type="number" name="nilai_kondisi[]" placeholder="Nilai" class="w-1/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+                                        <button type="button" onclick="hapusKondisi(this)" class="text-red-500 hover:text-red-700 text-xl font-bold px-2">&times;</button>
                                     </div>
                                 </div>
 
@@ -80,4 +81,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function tambahKondisi() {
+            const container = document.getElementById('kondisi-container');
+            const opsi = `{!! $kondisis->map(fn($k) => "<option value='{$k->id}'>{$k->nama}</option>")->implode('') !!}`;
+
+            const div = document.createElement('div');
+            div.className = 'flex space-x-2 items-center';
+
+            div.innerHTML = `
+            <select name="kondisi_teramati[]" class="w-2/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+                ${opsi}
+            </select>
+            <input type="number" name="nilai_kondisi[]" placeholder="Nilai" class="w-1/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+            <button type="button" onclick="hapusKondisi(this)" class="text-red-500 hover:text-red-700 text-xl font-bold px-2">&times;</button>
+        `;
+
+            container.appendChild(div);
+        }
+
+        function hapusKondisi(button) {
+            const div = button.parentElement;
+            div.remove();
+        }
+    </script>
+
+
+
 </x-app-layout>

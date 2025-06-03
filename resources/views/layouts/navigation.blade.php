@@ -30,6 +30,12 @@
                     <x-nav-link :href="route('admin.observasi')" :active="request()->routeIs('admin.observasi')">
                         {{ __('Observasi') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.hasilobservasi')" :active="request()->routeIs('admin.hasilobservasi')">
+                        {{ __('Hasil Observasi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.grafikobservasi')" :active="request()->routeIs('admin.grafikobservasi')">
+                        {{ __('Grafik') }}
+                    </x-nav-link>
 
 
 

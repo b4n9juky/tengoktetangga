@@ -99,6 +99,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // observasi
     Route::get('/admin/observasi/', [ObervasiContoller::class, 'getData'])->name('admin.observasi');
     Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
+    Route::get('/admin/hasilobservasi', [ObervasiContoller::class, 'hasilObservasi'])->name('admin.hasilobservasi');
+    Route::get('/admin/grafikobservasi', [ObervasiContoller::class, 'grafik'])->name('admin.grafikobservasi');
 
 
     Route::get('/responden', [SurveyorController::class, 'index'])->name('surveyor.index');
