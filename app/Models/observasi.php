@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class observasi extends Model
+class Observasi extends Model
 {
     public function kondisis()
     {
