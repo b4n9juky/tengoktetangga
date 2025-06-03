@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('choices', function (Blueprint $table) {
+        Schema::create('observasi_kondisis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('question_id')->constrained()->onDelete('cascade');
-            $table->string('text');
-            $table->unsignedInteger('bobot')->default(1);
+            $table->foreignId('observasi_id')->constrained('observasis')->onDelete('cascade');
+            $table->foreignId('kondisi_id')->constrained('kondisis')->onDelete('cascade');
+            $table->integer('nilai');
             $table->timestamps();
         });
     }
@@ -25,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('choices', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('observasi_kondisis');
     }
 };

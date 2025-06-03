@@ -38,8 +38,23 @@
 
                         <div>
                             <label for="kondisi_teramati" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kondisi Teramati</label>
-                            <textarea name="kondisi_teramati" id="kondisi_teramati" rows="3" placeholder="Tuliskan kondisi yang diamati"
-                                class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white resize-none" required></textarea>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kondisi Teramati</label>
+
+                                <div id="kondisi-container" class="space-y-3">
+                                    <div class="flex space-x-2">
+                                        <select name="kondisi_teramati[]" class="w-2/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+                                            @foreach ($kondisis as $kondisi)
+                                            <option value="{{ $kondisi->id }}">{{ $kondisi->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="number" name="nilai_kondisi[]" placeholder="Nilai" class="w-1/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+                                    </div>
+                                </div>
+
+                                <button type="button" onclick="tambahKondisi()" class="mt-2 text-blue-600 hover:underline text-sm">+ Tambah Kondisi</button>
+                            </div>
+
                         </div>
 
                         <div>

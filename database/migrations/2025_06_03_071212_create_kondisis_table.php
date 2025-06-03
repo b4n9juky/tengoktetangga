@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('questions', function (Blueprint $table) {
-            // Drop FK lama
-            $table->dropForeign(['tema_id']);
 
-            // Tambahkan ulang dengan CASCADE
-            $table->foreign('tema_id')
-                ->references('id')->on('tema_quisioners')
-                ->onDelete('cascade');
+        Schema::create('kondisis', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('kondisis');
     }
 };

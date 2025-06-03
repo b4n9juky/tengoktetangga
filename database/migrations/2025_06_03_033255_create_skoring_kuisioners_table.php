@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dokumentasi', function (Blueprint $table) {
+        Schema::create('skoring_kuisioners', function (Blueprint $table) {
+
             $table->id();
-            $table->foreignId('observasikunjungan_id')->constrained('observasi_kunjungans')->onDelete('cascade');
-            $table->string('file_path')->nullable();
+            $table->integer('nilai_awal');      // nilai batas bawah
+            $table->integer('nilai_akhir');     // nilai batas atas
+            $table->string('keterangan');       // misal: Sangat Baik, Baik, dll
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dokumentasi');
+        Schema::dropIfExists('skoring_kuisioners');
     }
 };

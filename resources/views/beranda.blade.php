@@ -90,6 +90,19 @@
         </ul>
     </section>
 
+    <!-- output yang diharapkan -->
+    <section id="tujuan" class="py-12 px-6 md:px-20 bg-white">
+        <h3 class="text-2xl font-bold text-green-600 mb-4">D. Output yang diharapkan </h3>
+        <ul class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+            <li>Terjalinnya hubungan yang harmonis antara siswa, masyarakat, dan madrasah. </li>
+            <li>Tumbuhnya rasa empati dan semangat tolong-menolong di kalangan siswa.</li>
+            <li>Penguatan nilai-nilai Qurani dan budaya gotong royong dalam kehidupan siswa. </li>
+            <li>Terbentuknya karakter siswa yang peduli terhadap lingkungan sosialnya.</li>
+        </ul>
+    </section>
+
+
+
     <!-- Footer -->
     <footer class="bg-green-600 text-white text-center py-6 mt-8">
         <p>&copy; 2025 MAN Bontang. Semua Hak Dilindungi.</p>
