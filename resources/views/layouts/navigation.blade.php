@@ -36,6 +36,12 @@
                     <x-nav-link :href="route('admin.grafikobservasi')" :active="request()->routeIs('admin.grafikobservasi')">
                         {{ __('Grafik') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('kondisi.index')" :active="request()->routeIs('kondisi.index')">
+                        {{ __('Kondisi') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('skor.index')" :active="request()->routeIs('skor.index')">
+                        {{ __('Skoring') }}
+                    </x-nav-link>
 
 
 

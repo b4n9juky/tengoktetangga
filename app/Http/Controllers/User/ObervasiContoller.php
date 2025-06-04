@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Surveyor;
-use App\Models\ObservasiKunjungan;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Dokumentasi;
@@ -112,7 +112,7 @@ class ObervasiContoller extends Controller
 
         ]);
 
-        if (!ObservasiKunjungan::find($id)) {
+        if (!Observasi::find($id)) {
             return back()->withErrors(['error' => 'ID Observasi Kunjungan tidak ditemukan']);
         }
 
@@ -128,7 +128,7 @@ class ObervasiContoller extends Controller
     }
     public function edit($id)
     {
-        $observasi = ObservasiKunjungan::findOrfail($id);
+        $observasi = Observasi::findOrfail($id);
         return view('user.observasi.edit', compact('observasi'));
     }
     public function update(Request $request, $id)
@@ -147,7 +147,7 @@ class ObervasiContoller extends Controller
 
         ]);
 
-        $observasi = ObservasiKunjungan::find($id);
+        $observasi = Observasi::find($id);
 
         if (!$observasi) {
             return back()->withErrors(['error' => 'ID Observasi Kunjungan tidak ditemukan']);
@@ -158,7 +158,7 @@ class ObervasiContoller extends Controller
     }
     public function destroy($id)
     {
-        $observasi = ObservasiKunjungan::findOrfail($id);
+        $observasi = Observasi::findOrfail($id);
 
         // dd($observasi);
         $observasi->destroy($id);
@@ -166,12 +166,12 @@ class ObervasiContoller extends Controller
     }
     public function getData()
     {
-        $observasi = ObservasiKunjungan::with('surveyor')->get();
+        $observasi = Observasi::with('surveyor')->get();
         return view('admin.observasi.index', compact('observasi'));
     }
     public function getDetail($id)
     {
-        $observasi = ObservasiKunjungan::with('dokumentasis')->findOrFail($id);
+        $observasi = Observasi::with('dokumentasis')->findOrFail($id);
         return view('admin.observasi.details', compact('observasi'));
     }
 
@@ -180,10 +180,10 @@ class ObervasiContoller extends Controller
 
     public function hasilObservasi()
     {
-        $data = Kondisi::with('observasis')->get();
+        $kondisi = Kondisi::with('observasis')->get();
 
         // Total nilai per kondisi
-        $hasil = $data->map(function ($kondisi) {
+        $hasil = $kondisi->map(function ($kondisi) {
             $total = $kondisi->observasis->sum(function ($obs) {
                 return $obs->pivot->nilai;
             });
@@ -194,8 +194,14 @@ class ObervasiContoller extends Controller
                 'jumlah_responden' => $kondisi->observasis->count()
             ];
         });
+        $data = DB::table('observasi_kondisis')
+            ->join('kondisis', 'observasi_kondisis.kondisi_id', '=', 'kondisis.id')
+            ->select('kondisis.nama', DB::raw('SUM(observasi_kondisis.nilai) as total_nilai'))
+            ->groupBy('kondisis.id', 'kondisis.nama')
+            ->get();
 
-        return view('admin.observasi.hasil', compact('hasil'));
+
+        return view('admin.observasi.hasil', ['dataKondisi' => $data, 'hasil' => $hasil]);
     }
 
 

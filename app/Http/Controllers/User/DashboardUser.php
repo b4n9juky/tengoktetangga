@@ -28,7 +28,53 @@ class DashboardUser extends Controller
         }
 
 
-        return view('user.dashboard', ['hasBiodata' => $hasBiodata, 'hasAnswer' => $hasAnswer]);
+        // mengatur siswa yang skornya tidak memenuhi syarat maka tidak bs lanjut menu observasi
+
+
+
+
+        $answers = Answer::with(['question.tema', 'choices'])
+            ->where('surveyor_id', $surveyor->id)
+            ->get();
+
+        // Hitung skor total per tema
+        $scoresByTema = $answers->groupBy('question.tema.id')->map(function ($group) {
+            $totalBobot = 0;
+
+            foreach ($group as $answer) {
+                foreach ($answer->choices as $choice) {
+                    $totalBobot += $choice->bobot ?? 0;
+                }
+            }
+
+            return [
+                'tema' => $group->first()->question->tema,
+                'total_score' => $totalBobot,
+            ];
+        })->values();
+
+        // Hitung total skor keseluruhan siswa
+        $totalSkor = $scoresByTema->sum('total_score');
+
+        // Ambil semua rentang skoring dari DB
+        $skorings = Skoring::where('is_active', false)->get();
+
+        // Cek apakah total skor masuk ke dalam salah satu rentang
+        $matchSkoring = $skorings->first(function ($skoring) use ($totalSkor) {
+            return $totalSkor >= $skoring->nilai_awal && $totalSkor <= $skoring->nilai_akhir;
+        });
+
+
+
+
+
+
+        return view('user.dashboard', [
+            'hasBiodata' => $hasBiodata,
+            'hasAnswer' => $hasAnswer,
+            'skor' => $matchSkoring,
+            'totalSkor' => $totalSkor,
+        ]);
     }
 
 

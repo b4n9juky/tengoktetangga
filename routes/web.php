@@ -11,8 +11,10 @@ use App\Http\Controllers\EvaluasiController;
 use App\Http\Controllers\User\DashboardUser;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\KondisiController;
 use App\Http\Controllers\TemaKuisionerController;
 use App\Http\Controllers\User\ObervasiContoller;
+use App\Http\Controllers\SkorController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -22,6 +24,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::get('/dashboard/user', [DashboardUser::class, 'index'])->name('dashboard.user');
+    Route::get('/dashboard/cek', [DashboardUser::class, 'cekResponden']);
     Route::get('/surveyors/create', [SurveyorController::class, 'create'])->name('surveyors.create');
     Route::post('/surveyors/store', [SurveyorController::class, 'store'])->name('surveyors.store');
 
@@ -71,6 +74,7 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin', [DashboardAdminController::class, 'index'])->name('dashboard.admin');
+
     Route::get('/questions/index', [QuestionController::class, 'index'])->name('questions.index');
 
 
@@ -101,6 +105,22 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
     Route::get('/admin/hasilobservasi', [ObervasiContoller::class, 'hasilObservasi'])->name('admin.hasilobservasi');
     Route::get('/admin/grafikobservasi', [ObervasiContoller::class, 'grafik'])->name('admin.grafikobservasi');
+
+
+    // kondisi teramati
+    Route::get('/kondisi', [KondisiController::class, 'index'])->name('kondisi.index');
+    Route::get('/kondisi/create', [KondisiController::class, 'create'])->name('kondisi.create');
+    Route::get('/kondisi/{id}/edit', [KondisiController::class, 'edit'])->name('kondisi.edit');
+    Route::post('/kondisi/store', [KondisiController::class, 'store'])->name('kondisi.store');
+    Route::post('/kondisi/{id}/update', [KondisiController::class, 'update'])->name('kondisi.update');
+    Route::delete('/kondisi/{id}/delete', [KondisiController::class, 'destroy'])->name('kondisi.destroy');
+    //rentang skor hasil kuisioner
+    Route::get('/skor', [SkorController::class, 'index'])->name('skor.index');
+    Route::get('/skor/create', [SkorController::class, 'create'])->name('skor.create');
+    Route::post('/skor/store', [SkorController::class, 'store'])->name('skor.store');
+    Route::get('/skor/{id}/edit', [SkorController::class, 'edit'])->name('skor.edit');
+    Route::post('/skor/{id}/update', [SkorController::class, 'update'])->name('skor.update');
+    Route::delete('/skor/{id}/delete', [SkorController::class, 'destroy'])->name('skor.destroy');
 
 
     Route::get('/responden', [SurveyorController::class, 'index'])->name('surveyor.index');

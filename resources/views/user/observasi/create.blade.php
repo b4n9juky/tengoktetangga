@@ -73,7 +73,7 @@
 
                         <div>
                             <button type="submit"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-all duration-200">
+                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 mt-5 rounded-lg shadow-md transition-all duration-200">
                                 Simpan
                             </button>
                         </div>

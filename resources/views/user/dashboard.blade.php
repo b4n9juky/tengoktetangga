@@ -77,20 +77,23 @@
                         {{-- Card: Observasi --}}
 
                         <div class="rounded-xl shadow-md bg-white dark:bg-gray-700 p-6 text-center transition transform hover:scale-105 hover:shadow-lg">
-                            @if ($hasAnswer)
+                            @if ($skor)
                             <a href="{{ route('observasi.index') }}">
                                 <img src="{{ asset('storage/icons/info.png') }}" alt="Observasi Icon" class="w-24 h-24 mx-auto mb-4 aspect-square object-contain">
                             </a>
                             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Observasi</h3>
                             <p class="text-sm text-gray-600 dark:text-gray-300">Lihat Hasil Observasi dari Kuisioner</p>
+
                             @else
-                            <div class="cursor-not-allowed opacity-50">
-                                <img src="{{ asset('storage/icons/info.png') }}" alt="Review Icon" class="w-24 h-24 mx-auto mb-4 aspect-square object-contain">
+                            <div class="cursor-not-allowed opacity-50 rounded-xl shadow-md bg-white dark:bg-gray-700 p-6 text-center">
+                                <img src="{{ asset('storage/icons/info.png') }}" alt="Observasi Icon" class="w-24 h-24 mx-auto mb-4 aspect-square object-contain">
                                 <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-1">Observasi</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-300">Isi Biodata & Kuisioner dulu !</p>
                             </div>
                             @endif
+
                         </div>
+
 
 
 

@@ -9,13 +9,16 @@ use App\Models\KategoriSurvey;
 use Illuminate\Http\Request;
 use App\Models\Answer;
 use App\Models\Surveyor;
+use App\Models\Skoring;
 use Illuminate\Support\Facades\Auth;
+
 
 class AnswerController extends Controller
 {
     public function index($id)
     {
         $user = Auth::user();
+
         $questions = Question::with('tema')
             ->where('tema_id', $id)->get();
 
@@ -65,6 +68,10 @@ class AnswerController extends Controller
 
         $user = Auth::user();
         $surveyor = $user->surveyor;
+        // ambil semua tabel skoring untuk ditampilkan di siswa
+
+
+        $skoring = Skoring::all();
 
         // Ambil semua jawaban surveyor dengan relasi tema dan choices
         $answers = Answer::with(['question.tema', 'choices'])
@@ -91,7 +98,7 @@ class AnswerController extends Controller
             ];
         })->values();
 
-        return view('user.answer.review-home', compact('scoresByTema', 'surveyor'));
+        return view('user.answer.review-home', compact('scoresByTema', 'surveyor', 'skoring'));
     }
 
 

@@ -37,6 +37,39 @@
                 </div>
             </div>
             @endforeach
+
+
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 mt-8">
+                <thead class="bg-gray-100 dark:bg-gray-700">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                            No
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                            Rentang Skor Kuisioner
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                            Keterangan
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    @foreach($skoring as $skor)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                            {{ $loop->iteration }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                            {{ $skor->nilai_awal }} s.d {{ $skor->nilai_akhir }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                            {{ $skor->keterangan }}
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
         </div>
 
     </div>
