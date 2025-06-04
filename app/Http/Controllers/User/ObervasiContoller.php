@@ -217,4 +217,13 @@ class ObervasiContoller extends Controller
             'dataKondisi' => $data,
         ]);
     }
+
+    public function destroyAdmin($id)
+    {
+        $observasi = Observasi::findOrfail($id);
+
+        // dd($observasi);
+        $observasi->destroy($id);
+        return redirect()->route('admin.observasi')->with('success', 'Data berhasil di hapus');
+    }
 }

@@ -105,7 +105,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
     Route::get('/admin/hasilobservasi', [ObervasiContoller::class, 'hasilObservasi'])->name('admin.hasilobservasi');
     Route::get('/admin/grafikobservasi', [ObervasiContoller::class, 'grafik'])->name('admin.grafikobservasi');
-
+    Route::delete('admin/observasi/{id}/destroy', [ObervasiContoller::class, 'destroyAdmin'])->name('observasi.destroyAdmin');
 
     // kondisi teramati
     Route::get('/kondisi', [KondisiController::class, 'index'])->name('kondisi.index');

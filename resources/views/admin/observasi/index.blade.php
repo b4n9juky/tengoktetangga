@@ -56,10 +56,15 @@
                                     {{$row->catatan_tambahan ?? '-'}}
                                 </td>
                                 <td class="px-4 py-3 whitespace-nowrap text-center">
-                                    <a href="#"
-                                        class="inline-flex items-center px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
-                                        <i data-feather="trash" class="w-4 h-4 mr-1"></i> Hapus
-                                    </a>
+                                    <form action="{{ route('observasi.destroyAdmin', $row->id) }}" method="POST"
+                                        class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kondisi ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center px-3 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition">
+                                            <i data-feather="trash" class="w-4 h-4 mr-1"></i> Hapus
+                                        </button>
+                                    </form>
                                     <a href="{{route('admin.observasiDetail',$row->id)}}"
                                         class="inline-flex items-center px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-red-700 transition">
                                         <i data-feather="image" class="w-4 h-4 mr-1"></i>Dokumentasi
