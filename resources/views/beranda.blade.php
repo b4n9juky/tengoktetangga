@@ -1,3 +1,6 @@
+@php use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Enums\UserRole; @endphp
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -40,12 +43,22 @@
             <h2 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">Program "Tengok Tetangga"</h2>
             <p class="text-lg md:text-xl mb-6 drop-shadow-md">Menguatkan nilai sosial dan karakter Islami melalui aksi nyata di lingkungan sekitar.</p>
             <div class="flex justify-center gap-4">
+                @if (Auth::check() && Auth::user()->role === UserRole::ADMIN)
+                <a href="{{ url('/dashboard/admin') }}" class="bg-white text-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 shadow">
+                    <i data-feather="log-in" class="w-5 h-5"></i> Dashboard Admin
+                </a>
+                @elseif(Auth::check() && Auth::user()->role === UserRole::PELAKSANA)
+                <a href="{{ url('/dashboard/user') }}" class="bg-white text-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 shadow">
+                    <i data-feather="log-in" class="w-5 h-5"></i> Dashboard User
+                </a>
+                @else
                 <a href="/login" class="bg-white text-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 shadow">
                     <i data-feather="log-in" class="w-5 h-5"></i> Masuk
                 </a>
                 <a href="/register" class="bg-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition flex items-center gap-2 shadow">
                     <i data-feather="user-plus" class="w-5 h-5"></i> Daftar
                 </a>
+                @endif
             </div>
         </div>
     </section>

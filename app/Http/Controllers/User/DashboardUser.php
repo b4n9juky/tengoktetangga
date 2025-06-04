@@ -11,36 +11,31 @@ use App\Models\Skoring;
 
 class DashboardUser extends Controller
 {
+
+
     public function index()
     {
-
         $user = Auth::user();
 
-
-        $surveyor = Surveyor::where('user_id', $user->id)->first();
-
+        $surveyor = Surveyor::where('user_id', $user->id)
+            ->with([
+                'answers.question.tema',
+                'answers.choices'
+            ])
+            ->first();
 
         $hasBiodata = !is_null($surveyor);
         $hasAnswer = false;
+        $answers = collect(); // default kosong
 
         if ($surveyor) {
-            $hasAnswer = Answer::where('surveyor_id', $surveyor->id)->exists();
+            $answers = $surveyor->answers; // eager loaded
+            $hasAnswer = $answers->isNotEmpty();
         }
 
-
-        // mengatur siswa yang skornya tidak memenuhi syarat maka tidak bs lanjut menu observasi
-
-
-
-
-        $answers = Answer::with(['question.tema', 'choices'])
-            ->where('surveyor_id', $surveyor->id)
-            ->get();
-
-        // Hitung skor total per tema
+        // Hitung skor per tema
         $scoresByTema = $answers->groupBy('question.tema.id')->map(function ($group) {
             $totalBobot = 0;
-
             foreach ($group as $answer) {
                 foreach ($answer->choices as $choice) {
                     $totalBobot += $choice->bobot ?? 0;
@@ -53,21 +48,13 @@ class DashboardUser extends Controller
             ];
         })->values();
 
-        // Hitung total skor keseluruhan siswa
         $totalSkor = $scoresByTema->sum('total_score');
 
-        // Ambil semua rentang skoring dari DB
-        $skorings = Skoring::where('is_active', false)->get();
-
-        // Cek apakah total skor masuk ke dalam salah satu rentang
-        $matchSkoring = $skorings->first(function ($skoring) use ($totalSkor) {
-            return $totalSkor >= $skoring->nilai_awal && $totalSkor <= $skoring->nilai_akhir;
-        });
-
-
-
-
-
+        // Cek skor dari skoring yang aktif
+        $matchSkoring = Skoring::where('is_active', false)
+            ->where('nilai_awal', '<=', $totalSkor)
+            ->where('nilai_akhir', '>=', $totalSkor)
+            ->first();
 
         return view('user.dashboard', [
             'hasBiodata' => $hasBiodata,
@@ -76,7 +63,6 @@ class DashboardUser extends Controller
             'totalSkor' => $totalSkor,
         ]);
     }
-
 
 
     public function cekResponden()
