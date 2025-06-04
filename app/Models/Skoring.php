@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Skoring extends Model
 {
     protected $table = 'skoring_kuisioners';
-    protected $fillable = ['nilai_awal', 'nilai_akhir', 'keterangan'];
+    protected $fillable = ['nilai_awal', 'nilai_akhir', 'keterangan', 'is_active'];
 }

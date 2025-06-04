@@ -36,7 +36,7 @@ class SkorController extends Controller
             'nilai_awal' => 'required|integer',
             'nilai_akhir' => 'required|integer|gte:nilai_awal',
             'keterangan' => 'required|string',
-            'is_active' => 'required|integer',
+            'is_active' => 'required|boolean',
         ]);
         Skoring::create($validated);
         return redirect()->route('skor.index')->with('success', 'Data Berhasil ditambahkan');
@@ -65,7 +65,7 @@ class SkorController extends Controller
             'nilai_awal' => 'required|integer',
             'nilai_akhir' => 'required|integer|gte:nilai_awal',
             'keterangan' => 'required|string',
-            'is_active' => 'required|integer',
+            'is_active' => 'required|boolean',
         ]);
         $skor = Skoring::findOrFail($id);
         $skor->update($validated);
