@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('dokumentasis', function (Blueprint $table) {
 
-        Schema::create('surveyors', function (Blueprint $table) {
+
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('nama');
-            $table->string('kelas');
-            $table->string('alamat');
-            $table->string('no_hp');
+            $table->foreignId('observasi_id')->constrained()->onDelete('cascade');
+            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('surveyors');
+        Schema::dropIfExists('dokumentasis');
     }
 };

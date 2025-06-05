@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dokumentasi extends Model
 {
-    protected $table = 'dokumentasi';
-    protected $fillable = ['observasikunjungan_id', 'file_path'];
+    protected $table = 'dokumentasis';
+    protected $fillable = ['observasi_id', 'file_path'];
 
 
     public function observasi()

@@ -106,14 +106,14 @@ class ObservasiController extends Controller
     public function showForm($id)
     {
         $observasi = Observasi::findOrfail($id);
-        $photos = Dokumentasi::where('observasikunjungan_id', $observasi->id)->get();
+        $photos = Dokumentasi::where('observasi_id', $observasi->id)->get();
         return view('user.observasi.unggah_file', compact('observasi', 'photos'));
     }
 
     public function uploadPhoto(Request $request, $id)
     {
         $request->validate([
-            'observasikunjungan_id' => 'required|exists:observasi_kunjungans,id',
+            'observasi_id' => 'required|exists:observasis,id',
             'photo' => 'required|file|mimetypes:application/pdf,image/jpeg|max:2048',
 
         ]);
@@ -126,7 +126,7 @@ class ObservasiController extends Controller
         $url = Storage::url($path);
 
         Dokumentasi::create([
-            'observasikunjungan_id' => $id,
+            'observasi_id' => $id,
             'file_path' => $url,
         ]);
 

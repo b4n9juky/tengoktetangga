@@ -12,7 +12,7 @@
                 <form action="{{ route('observasi.imageUpload',$observasi->id) }}" method="POST" enctype="multipart/form-data"
                     class="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
                     @csrf
-                    <input type="hidden" name="observasikunjungan_id" value="{{$observasi->id}}">
+                    <input type="hidden" name="observasi_id" value="{{$observasi->id}}">
                     <h2 class="text-2xl font-bold mb-6 text-center">Upload Foto</h2>
 
                     @if(session('success'))
