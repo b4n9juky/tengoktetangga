@@ -8,22 +8,30 @@ class Kondisi extends Model
 {
     protected $table = 'kondisis';
     protected $fillable = ['nama'];
+    public $timestamps = true;
+
+
     public function observasi()
     {
-        return $this->belongsTo(Observasi::class, 'observasi_id');
-    }
-
-    // public function kondisi()
-    // {
-    //     return $this->belongsTo(Kondisi::class, 'kondisi_id');
-    // }
-
-
-    public function observasis()
-    {
-        return $this->belongsToMany(Observasi::class, 'observasi_kondisis')
+        return $this->belongsToMany(
+            Observasi::class,
+            'observasi_kondisis',
+            'kondisi_id',
+            'observasi_id'
+        )
             ->withPivot('nilai');
     }
+    public function observasiKondisi()
+    {
+        return $this->hasMany(ObservasiKondisi::class);
+    }
+    // public function observasis()
+    // {
+    //     return $this->belongsToMany(
+    //         Observasi::class,
+    //         'observasi_kondisis',
+    //         'kondisi_id',
+    //         'observasi_id'
+    //     );
+    // }
 }
-
-

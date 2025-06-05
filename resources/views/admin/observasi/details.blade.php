@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 p-6">
-                    @foreach($observasi->dokumentasis as $doc)
+                    @foreach($observasi->dokumentasi as $doc)
                     <div class="cursor-pointer">
                         <img
                             src="{{ asset($doc->file_path) }}"

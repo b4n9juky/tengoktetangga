@@ -10,8 +10,8 @@ class Dokumentasi extends Model
     protected $fillable = ['observasikunjungan_id', 'file_path'];
 
 
-    public function observasikunjungan()
+    public function observasi()
     {
-        return $this->belongsTo(ObservasiKunjungan::class);
+        return $this->belongsTo(Observasi::class);
     }
 }

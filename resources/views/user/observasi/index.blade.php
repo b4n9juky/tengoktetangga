@@ -1,19 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Lembar Observasi') }}
         </h2>
     </x-slot>
-
-    <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="bg-white dark:bg-gray-800 dark:text-gray-200 p-6 rounded-2xl shadow-lg">
-
-                @if (session('success'))
-                <x-alert type="success" title="Berhasil!" :message="session('success')" />
-                @endif
-
-
+    <div class="py-12">
+        <div class="max-w-full mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-bold flex items-center gap-2">
                         <i data-feather="clipboard"></i>
@@ -25,9 +18,9 @@
                     </a>
                 </div>
 
-                @if ($observasi->count() > 0)
+                @if ($observasis->count() > 0)
                 <div class="grid gap-4 md:grid-cols-2">
-                    @foreach($observasi as $row)
+                    @foreach($observasis as $index => $row)
                     <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 shadow transition hover:shadow-lg">
                         <div class="flex justify-between items-start mb-2">
                             <div>
@@ -44,9 +37,9 @@
                         </div>
 
                         <div class="space-y-1 text-sm text-gray-700 dark:text-gray-200">
-                            <p><strong>📅 Tanggal:</strong> {{ $row->tanggal_kunjungan }}</p>
-                            <p><strong>🔍 Kondisi:</strong> {{ $row->kondisi_teramati }}</p>
-                            <p><strong>🤝 Interaksi:</strong> {{ $row->bentuk_interaksi }}</p>
+                            <p><strong>📅 Tanggal:</strong> {{ $row->tanggal_kunjungan ?? '-'  }}</p>
+                            <p><strong>🔍 Kondisi:</strong> {{ $row->nama_kondisis ?? '-' }}</p>
+                            <p><strong>🤝 Interaksi:</strong> {{ $row->bentuk_interaksi ?? '-'  }}</p>
                         </div>
 
                         <div class="flex flex-wrap gap-2 mt-4">
@@ -79,24 +72,8 @@
                 @else
                 <p class="text-gray-500 dark:text-gray-400">Belum ada data observasi.</p>
                 @endif
-
             </div>
         </div>
     </div>
-
-    {{-- Feather Icons --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-        });
-    </script>
-    <script>
-        setTimeout(() => {
-            const alert = document.querySelector('.alert');
-            if (alert) alert.remove();
-        }, 3000); // 3 detik
-    </script>
 
 </x-app-layout>

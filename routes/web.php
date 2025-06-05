@@ -13,8 +13,9 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\KondisiController;
 use App\Http\Controllers\TemaKuisionerController;
-use App\Http\Controllers\User\ObervasiContoller;
+
 use App\Http\Controllers\SkorController;
+use App\Http\Controllers\User\ObservasiController;
 
 Route::get('/', function () {
     return view('beranda');
@@ -44,14 +45,14 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::get('/questioner/indexList', [QuestionController::class, 'indexList'])->name('questioners.indexList');
     Route::get('/answer/{id}/edit', [AnswerController::class, 'edit'])->name('answer.edit');
     Route::post('/answer/{id}/update', [AnswerController::class, 'update'])->name('answer.update');
-    Route::get('/observasi', [ObervasiContoller::class, 'index'])->name('observasi.index');
-    Route::get('/observasi/create', [ObervasiContoller::class, 'create'])->name('observasi.create');
-    Route::post('/observasi/store', [ObervasiContoller::class, 'store'])->name('observasi.store');
-    Route::get('/observasi/{id}/edit', [ObervasiContoller::class, 'edit'])->name('observasi.edit');
-    Route::post('/observasi/{id}/update', [ObervasiContoller::class, 'update'])->name('observasi.update');
-    Route::get('/observasi/{id}/image', [ObervasiContoller::class, 'showForm'])->name('observasi.showform');
-    Route::post('/observasi/{id}/upload', [ObervasiContoller::class, 'uploadPhoto'])->name('observasi.imageUpload');
-    Route::delete('/observasi/{id}/destroy', [ObervasiContoller::class, 'destroy'])->name('observasi.destroy');
+    Route::get('/observasi', [ObservasiController::class, 'index'])->name('observasi.index');
+    Route::get('/observasi/create', [ObservasiController::class, 'create'])->name('observasi.create');
+    Route::post('/observasi/store', [ObservasiController::class, 'store'])->name('observasi.store');
+    Route::get('/observasi/{id}/edit', [ObservasiController::class, 'edit'])->name('observasi.edit');
+    Route::post('/observasi/{id}/update', [ObservasiController::class, 'update'])->name('observasi.update');
+    Route::get('/observasi/{id}/image', [ObservasiController::class, 'showForm'])->name('observasi.showform');
+    Route::post('/observasi/{id}/upload', [ObservasiController::class, 'uploadPhoto'])->name('observasi.imageUpload');
+    Route::delete('/observasi/{id}/destroy', [ObservasiController::class, 'destroy'])->name('observasi.destroy');
 
 
     Route::get('/kegiatan/', [KegiatanController::class, 'index'])->name('kegiatan.home');
@@ -101,11 +102,12 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::post('/questions/{id}/update', [QuestionController::class, 'update'])->name('questions.update');
 
     // observasi
-    Route::get('/admin/observasi/', [ObervasiContoller::class, 'getData'])->name('admin.observasi');
-    Route::get('/dokumentasi/{id}', [ObervasiContoller::class, 'getDetail'])->name('admin.observasiDetail');
-    Route::get('/admin/hasilobservasi', [ObervasiContoller::class, 'hasilObservasi'])->name('admin.hasilobservasi');
-    Route::get('/admin/grafikobservasi', [ObervasiContoller::class, 'grafik'])->name('admin.grafikobservasi');
-    Route::delete('admin/observasi/{id}/destroy', [ObervasiContoller::class, 'destroyAdmin'])->name('observasi.destroyAdmin');
+    Route::get('/admin/observasi/', [ObservasiController::class, 'getData'])->name('admin.observasi');
+    Route::get('/dokumentasi/{id}', [ObservasiController::class, 'getDetail'])->name('admin.observasiDetail');
+    Route::get('/admin/hasilobservasi', [ObservasiController::class, 'hasilObservasi'])->name('admin.hasilobservasi');
+    Route::get('/admin/grafikobservasi', [ObservasiController::class, 'grafik'])->name('admin.grafikobservasi');
+    Route::delete('admin/observasi/{id}/destroy', [ObservasiController::class, 'destroyAdmin'])->name('observasi.destroyAdmin');
+    Route::get('admin/{id}/showdata', [ObservasiController::class, 'showDataTetangga'])->name('showtetangga');
 
     // kondisi teramati
     Route::get('/kondisi', [KondisiController::class, 'index'])->name('kondisi.index');

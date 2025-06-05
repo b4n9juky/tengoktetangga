@@ -121,6 +121,38 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
 
+        @if (Auth::user()->role === \App\Enums\UserRole::ADMIN)
+        <div class="mt-3 space-y-1">
+            <x-responsive-nav-link :href="route('dashboard.admin')" :active="request()->routeIs('dashboard.admin')">
+                {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('surveyor.index')" :active="request()->routeIs('surveyor.index')">
+                {{ __('Responden') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('tema')" :active="request()->routeIs('tema')">
+                {{ __('Tema Kuisioner') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.observasi')" :active="request()->routeIs('admin.observasi')">
+                {{ __('Observasi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.hasilobservasi')" :active="request()->routeIs('admin.hasilobservasi')">
+                {{ __('Hasil Observasi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.grafikobservasi')" :active="request()->routeIs('admin.grafikobservasi')">
+                {{ __('Grafik') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('kondisi.index')" :active="request()->routeIs('kondisi.index')">
+                {{ __('Kondisi') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('skor.index')" :active="request()->routeIs('skor.index')">
+                {{ __('Skoring') }}
+            </x-responsive-nav-link>
+        </div>
+
+        @endif
+
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -145,6 +177,29 @@
                     </x-responsive-nav-link>
                 </form>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 </nav>

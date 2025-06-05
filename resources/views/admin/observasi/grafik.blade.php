@@ -1,81 +1,122 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center space-x-3">
-            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M11 3.055A9 9 0 1020.945 13H11V3.055z" />
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M20.488 9H15V3.512A8.988 8.988 0 0120.488 9z" />
-            </svg>
+            <i data-feather="pie-chart" class="w-6 h-6 text-indigo-600"></i>
             <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Grafik Kondisi Teramati</h2>
         </div>
     </x-slot>
 
-    <div class="py-10 max-w-5xl mx-auto px-4">
-        <div class="bg-white dark:bg-gray-800 shadow rounded-2xl p-6">
-            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-100 mb-4 flex items-center space-x-2">
-                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M11 3.055A9 9 0 1020.945 13H11V3.055z" />
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M20.488 9H15V3.512A8.988 8.988 0 0120.488 9z" />
-                </svg>
-                <span>Grafik Berdasarkan Kondisi</span>
-            </h3>
-            <canvas id="donutChart" class="mx-auto max-w-sm sm:max-w-md md:max-w-lg"></canvas>
+    <div class="py-10 max-w-6xl mx-auto px-4">
+        <div class="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 space-y-10">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-100 mb-4 flex items-center space-x-2">
+                    <i data-feather="bar-chart-2" class="w-5 h-5 text-emerald-500"></i>
+                    <span>Grafik Berdasarkan Kondisi</span>
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Donut Chart -->
+                    <div class="aspect-[4/3]">
+                        <canvas id="donutChart"></canvas>
+                    </div>
+
+                    <!-- Bar Chart -->
+                    <div class="aspect-[4/3]">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Line Chart Full Width -->
+                <div class="aspect-[4/3] mt-8">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('donutChart').getContext('2d');
+    {{-- Feather Icons CDN --}}
+    <script src="https://unpkg.com/feather-icons"></script>
 
-        const data = {
-            labels: {!! json_encode($dataKondisi->pluck('nama')) !!},
-            datasets: [{
-                label: 'Total Nilai',
-                data: {!! json_encode($dataKondisi->pluck('total_nilai')) !!},
-                backgroundColor: [
-                    '#22c55e', // green
-                    '#3b82f6', // blue
-                    '#f59e0b', // amber
-                    '#ef4444', // red
-                    '#8b5cf6', // purple
-                    '#14b8a6'  // teal
-                ],
-                borderWidth: 1
-            }]
+    {{-- ChartJS CDN --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        feather.replace(); // aktifkan Feather Icons
+
+        const labels = @json($dataKondisi->pluck('nama'));
+        const nilai = @json($dataKondisi->pluck('total_nilai'));
+
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.raw} poin`;
+                        }
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
         };
 
-        const donutChart = new Chart(ctx, {
+        // Donut Chart
+        new Chart(document.getElementById('donutChart').getContext('2d'), {
             type: 'doughnut',
-            data: data,
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: nilai,
+                    backgroundColor: [
+                        '#22c55e', '#3b82f6', '#f59e0b',
+                        '#ef4444', '#8b5cf6', '#14b8a6', '#e879f9', '#0ea5e9'
+                    ]
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Bar Chart
+        new Chart(document.getElementById('barChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Nilai',
+                    data: nilai,
+                    backgroundColor: '#3b82f6',
+                    borderColor: '#1e40af',
+                    borderWidth: 1
+                }]
+            },
             options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#4b5563',
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    title: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                return `${context.label}: ${context.raw} poin`;
-                            }
-                        }
+                ...chartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
             }
+        });
+
+        // Line Chart
+        new Chart(document.getElementById('lineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Nilai',
+                    data: nilai,
+                    borderColor: '#10b981',
+                    backgroundColor: '#d1fae5',
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
         });
     </script>
 </x-app-layout>

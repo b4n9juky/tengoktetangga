@@ -14,7 +14,7 @@
                 <div>
                     <div class="text-3xl font-bold">{{$jumlahPertanyaan}}</div>
                     <div class="text-sm">Jumlah Kuisioner</div>
-                    <a href="#" class="text-white text-sm flex items-center mt-2 hover:underline">
+                    <a href="{{route('tema')}}" class="text-white text-sm flex items-center mt-2 hover:underline">
                         More info <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                 <div>
                     <div class="text-3xl font-bold">{{$jumlahResponden}}</div>
                     <div class="text-sm">Responden</div>
-                    <a href="#" class="text-white text-sm flex items-center mt-2 hover:underline">
+                    <a href="{{route('surveyor.index')}}" class="text-white text-sm flex items-center mt-2 hover:underline">
                         More info <i data-feather="arrow-right" class="ml-1 w-4 h-4"></i>
                     </a>
                 </div>

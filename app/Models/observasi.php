@@ -16,22 +16,39 @@ class Observasi extends Model
         'bentuk_interaksi',
         'catatan_tambahan',
     ];
-    public function kondisi()
-    {
-        return $this->hasMany(Kondisi::class, 'observasi_id');
-    }
 
-    public function dokumentasis()
+
+    public function dokumentasi()
     {
-        return $this->hasMany(Dokumentasi::class, 'observasikunjungan_id');
+        return $this->hasMany(Dokumentasi::class, 'observasi_id');
     }
     public function surveyor()
     {
         return $this->belongsTo(Surveyor::class);
     }
-    public function observasikondisi()
+    public function kondisi()
     {
-        return $this->belongsToMany(Kondisi::class, 'observasi_kondisi')
+        return $this->belongsToMany(
+            Kondisi::class,
+            'observasi_kondisis',
+            'observasi_id',
+            'kondisi_id'
+        )
             ->withPivot('nilai');
     }
+    public function observasiKondisi()
+    {
+        return $this->hasMany(ObservasiKondisi::class);
+    }
+
+
+    // public function kondisis()
+    // {
+    //     return $this->belongsToMany(
+    //         Kondisi::class,          // Model terkait
+    //         'observasi_kondisis',    // Nama tabel pivot
+    //         'observasi_id',          // Foreign key di pivot untuk model Observasi
+    //         'kondisi_id'             // Foreign key di pivot untuk model Kondisi
+    //     );
+
 }
