@@ -35,11 +35,11 @@
                         <label class="inline-flex items-center">
                             <input type="hidden" name="is_active" value="0">
                             <input type="radio" name="is_active" class="text-indigo-600 border-gray-300 focus:ring-indigo-500" value="0" {{$row->is_active == "0" ? 'checked' :''}}>
-                            Tidak Aktif
+                            Aktif
                             <span class="ml-2 text-gray-700 dark:text-gray-200"></span>
 
                             <input type="radio" name="is_active" class="text-indigo-600 border-gray-300 focus:ring-indigo-500" value="1" {{$row->is_active == "1" ? 'checked' :''}}>
-                            Aktif
+                            Tidak Aktif
 
                             <span class="ml-2 text-gray-700 dark:text-gray-200"></span>
 
