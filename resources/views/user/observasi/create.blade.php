@@ -48,7 +48,7 @@
                                             <option value="{{ $kondisi->id }}">{{ $kondisi->nama }}</option>
                                             @endforeach
                                         </select>
-                                        <input type="number" name="nilai_kondisi[]" placeholder="Nilai" class="w-1/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white">
+                                        <input type="number" name="nilai_kondisi[]" placeholder="Di isi Jumlah, jika tidak ada di isi nol" class="w-1/3 px-4 py-2 border rounded-md dark:bg-gray-700 dark:text-white" required>
                                         <button type="button" onclick="hapusKondisi(this)" class="text-red-500 hover:text-red-700 text-xl font-bold px-2">&times;</button>
                                     </div>
                                 </div>

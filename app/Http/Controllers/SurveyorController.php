@@ -54,6 +54,7 @@ class SurveyorController extends Controller
 
         $responden = Surveyor::with('answers.choices', 'answers.question.tema')->get();
 
+
         return view('admin.surveyor.index', compact('responden'));
     }
     public function create()
@@ -118,5 +119,11 @@ class SurveyorController extends Controller
         ]);
 
         return redirect()->route('dashboard.user')->with('success', 'Biodata berhasil diperbarui.');
+    }
+    public function destroy($id)
+    {
+        $answer = Answer::where('surveyor_id', $id)->first();
+        $answer->delete();
+        return redirect()->route('surveyor.index')->with('success', 'Data berhasil di hapus');
     }
 }

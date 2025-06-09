@@ -36,6 +36,7 @@
                                             <th class="px-4 py-3 text-left">Alamat</th>
                                             <th class="px-4 py-3 text-left">Pelapor</th>
                                             <th class="px-4 py-3 text-left">No HP</th>
+                                            <th class="px-4 py-3 text-left">Dokumentasi</th>
                                             {{-- Tambah kolom lain jika diperlukan --}}
                                         </tr>
                                     </thead>
@@ -47,6 +48,26 @@
                                             <td class="px-4 py-2">{{ $observasi->alamat ?? '-' }}</td>
                                             <td class="px-4 py-2">{{ $observasi->surveyor->nama ?? '-' }}</td>
                                             <td class="px-4 py-2">{{ $observasi->surveyor->no_hp ?? '-' }}</td>
+                                            <td class="px-4 py-2">
+                                                @if($observasi->dokumentasi->isEmpty())
+                                                -
+                                                @else
+                                                @foreach($observasi->dokumentasi as $dok)
+
+                                                <div class="cursor-pointer ">
+                                                    <img
+                                                        src="{{ asset($dok->file_path) }}"
+                                                        alt="Foto Observasi"
+                                                        class="rounded-md shadow-md w-10 h-10 object-cover hover:scale-105 transition-transform duration-300"
+                                                        onclick="openLightbox('{{ asset($dok->file_path) }}')">
+                                                </div>
+
+
+
+                                                @endforeach
+
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -61,15 +82,38 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                     {{-- Feather Icon Init --}}
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
                             feather.replace();
                         });
+                    </script>
+                    <!-- Lightbox Modal -->
+                    <div id="lightbox" class="fixed inset-0 bg-black bg-opacity-80 hidden items-center justify-center z-50">
+                        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-xl" />
+                        <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white text-3xl font-bold">&times;</button>
+                    </div>
+
+                    <!-- Feather Icons init script -->
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            if (typeof feather !== 'undefined') {
+                                feather.replace();
+                            }
+                        });
+
+                        function openLightbox(url) {
+                            const lightbox = document.getElementById("lightbox");
+                            const lightboxImg = document.getElementById("lightbox-img");
+                            lightboxImg.src = url;
+                            lightbox.classList.remove("hidden");
+                            lightbox.classList.add("flex");
+                        }
+
+                        function closeLightbox() {
+                            const lightbox = document.getElementById("lightbox");
+                            lightbox.classList.add("hidden");
+                            lightbox.classList.remove("flex");
+                        }
                     </script>
 </x-app-layout>

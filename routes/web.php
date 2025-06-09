@@ -126,6 +126,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
 
     Route::get('/responden', [SurveyorController::class, 'index'])->name('surveyor.index');
+    Route::get('/responden/{id}/edit', [SurveyorController::class, 'getIndex'])->name('surveyor.getIndex');
+    Route::delete('/responden/{id}/delete', [SurveyorController::class, 'destroy'])->name('surveyor.destroy');
 });
 
 Route::middleware('auth')->group(function () {

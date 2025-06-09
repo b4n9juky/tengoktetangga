@@ -235,7 +235,7 @@ class ObservasiController extends Controller
     }
     public function showDataTetangga($id)
     {
-        $kondisi = Kondisi::with('observasi')->find($id);
+        $kondisi = Kondisi::with('observasi.dokumentasi')->find($id);
         $observasis = $kondisi->observasi;
         return view('admin.observasi.showTetangga', compact('observasis', 'kondisi'));
     }

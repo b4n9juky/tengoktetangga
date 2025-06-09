@@ -54,18 +54,18 @@
                                 <td class="px-4 py-2">{{ $skor}}</td>
 
                                 <td class="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
-                                    <a href="{{ route('observasi.create') }}"
-                                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition duration-200">
-                                        + Ajukan Jadi Kegiatan
-                                    </a>
-                                    <a href="{{ route('observasi.create') }}"
-                                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition duration-200">
-                                        x Hapus
-                                    </a>
-                                    <a href="{{ route('observasi.create') }}"
-                                        class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition duration-200">
-                                        +ubah
-                                    </a>
+
+
+                                    <form action="{{ route('surveyor.destroy', $answer->surveyor_id) }}" method="POST"
+                                        class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kondisi ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center px-3 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-md transition">
+                                            <i data-feather="trash" class="w-4 h-4 mr-1"></i> Hapus
+                                        </button>
+                                    </form>
+
                                 </td>
                             </tr>
                             @endforeach
