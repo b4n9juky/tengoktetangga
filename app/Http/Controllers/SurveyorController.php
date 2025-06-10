@@ -122,8 +122,8 @@ class SurveyorController extends Controller
     }
     public function destroy($id)
     {
-        $answer = Answer::where('surveyor_id', $id)->first();
-        $answer->delete();
+        Answer::where('surveyor_id', $id)->delete();
+
         return redirect()->route('surveyor.index')->with('success', 'Data berhasil di hapus');
     }
 }
