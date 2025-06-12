@@ -114,7 +114,7 @@ class ObservasiController extends Controller
     {
         $request->validate([
             'observasi_id' => 'required|exists:observasis,id',
-            'photo' => 'required|file|mimetypes:application/pdf,image/jpeg|max:2048',
+            'photo' => 'required|file|mimetypes:application/pdf,image/jpeg|max:1048',
 
         ]);
 
@@ -123,15 +123,35 @@ class ObservasiController extends Controller
         }
 
         $path = $request->file('photo')->store('dokumentasi', 'public');
-        $url = Storage::url($path);
+        // $url = url($path);
 
         Dokumentasi::create([
             'observasi_id' => $id,
-            'file_path' => $url,
+            'file_path' => $path,
         ]);
 
-        return back()->with('success', 'Foto berhasil diupload!')->with('url', $url);
+        return back()->with('success', 'Foto berhasil diupload!')->with('url', $path);
     }
+
+    public function destroyPhoto($id)
+    {
+
+        $photo = Dokumentasi::where('id', $id)->first();
+
+        if (!$photo) {
+            return back()->with('error', 'Foto tidak ditemukan.');
+        }
+
+        if (Storage::disk('public')->exists($photo->file_path)) {
+            Storage::disk('public')->delete($photo->file_path);
+        }
+
+        $photo->delete();
+
+        return back()->with('success', 'Foto berhasil dihapus.');
+    }
+
+
     public function edit($id)
     {
         $observasi = Observasi::findOrfail($id);
@@ -184,33 +204,46 @@ class ObservasiController extends Controller
 
 
 
+    // public function hasilObservasi()
+    // {
+    //     $kondisi = Kondisi::with('observasi')->get();
+
+    //     // Total nilai per kondisi
+    //     $hasil = $kondisi->map(function ($kondisi) {
+    //         $total = $kondisi->observasi->sum(function ($obs) {
+    //             return $obs->pivot->nilai;
+    //         });
+
+    //         return [
+    //             'id' => $kondisi->id,
+    //             'nama' => $kondisi->nama,
+    //             'total_nilai' => $total,
+    //             'jumlah_responden' => $kondisi->observasi->count()
+    //         ];
+    //     });
+    //     $data = DB::table('observasi_kondisis')
+    //         ->join('kondisis', 'observasi_kondisis.kondisi_id', '=', 'kondisis.id')
+    //         ->select('kondisis.nama', DB::raw('SUM(observasi_kondisis.nilai) as total_nilai'))
+    //         ->groupBy('kondisis.id', 'kondisis.nama')
+    //         ->get();
+
+
+    //     return view('admin.observasi.hasil', ['dataKondisi' => $data, 'hasil' => $hasil]);
+    // }
+
     public function hasilObservasi()
     {
-        $kondisi = Kondisi::with('observasi')->get();
-
-        // Total nilai per kondisi
-        $hasil = $kondisi->map(function ($kondisi) {
-            $total = $kondisi->observasi->sum(function ($obs) {
-                return $obs->pivot->nilai;
-            });
-
+        $hasil = Kondisi::with('observasi')->get()->map(function ($kondisi) {
             return [
                 'id' => $kondisi->id,
                 'nama' => $kondisi->nama,
-                'total_nilai' => $total,
-                'jumlah_responden' => $kondisi->observasi->count()
+                'total_nilai' => $kondisi->observasi->sum(fn($obs) => $obs->pivot->nilai),
+                'jumlah_responden' => $kondisi->observasi->count(),
             ];
         });
-        $data = DB::table('observasi_kondisis')
-            ->join('kondisis', 'observasi_kondisis.kondisi_id', '=', 'kondisis.id')
-            ->select('kondisis.nama', DB::raw('SUM(observasi_kondisis.nilai) as total_nilai'))
-            ->groupBy('kondisis.id', 'kondisis.nama')
-            ->get();
 
-
-        return view('admin.observasi.hasil', ['dataKondisi' => $data, 'hasil' => $hasil]);
+        return view('admin.observasi.hasil', ['hasil' => $hasil]);
     }
-
 
     public function grafik()
     {

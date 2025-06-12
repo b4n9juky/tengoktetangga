@@ -28,6 +28,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            @php $no = 1; @endphp
                             @foreach($responden as $siswa)
                             @php
                             $skorTema = [];
@@ -46,7 +47,7 @@
                             @endphp
                             @foreach($skorTema as $tema => $skor)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                <td class="px-4 py-2">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-2">{{$no++}}</td>
                                 <td class="px-4 py-2">{{ $siswa->nama }}</td>
                                 <td class="px-4 py-2">{{ $siswa->kelas}}</td>
                                 <td class="px-4 py-2">{{ $tema }}</td>

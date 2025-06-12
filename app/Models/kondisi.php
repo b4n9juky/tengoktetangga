@@ -34,4 +34,7 @@ class Kondisi extends Model
     //         'observasi_id'
     //     );
     // }
+
+
+
 }

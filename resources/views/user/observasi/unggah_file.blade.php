@@ -6,21 +6,24 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-7xl mx-auto sm:px-4 px-2 lg:px-8 space-y-6">
             <div class="bg-white dark:bg-gray-800 dark:text-gray-200 p-6 rounded-2xl shadow-lg">
 
                 <form action="{{ route('observasi.imageUpload',$observasi->id) }}" method="POST" enctype="multipart/form-data"
-                    class="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-8 w-full max-w-md mx-auto">
+                    class="bg-white dark:bg-gray-900 shadow-lg rounded-lg p-4 sm:p-6 w-full max-w-lg mx-auto">
                     @csrf
-                    <input type="hidden" name="observasi_id" value="{{$observasi->id}}">
-                    <h2 class="text-2xl font-bold mb-6 text-center">Upload Foto</h2>
+                    <input type="hidden" name="observasi_id" value="{{ $observasi->id }}">
+                    <h2 class="text-2xl font-bold mb-4 text-center">Upload Foto</h2>
+                    <p class="text-sm font-medium text-center text-gray-600 dark:text-gray-300 mb-4">
+                        Format jpeg atau pdf, maksimal ukuran 1MB
+                    </p>
 
                     @if(session('success'))
                     <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
                         {{ session('success') }}
                         @if(session('url'))
                         <div class="mt-2">
-                            <img src="{{ session('url') }}" alt="Uploaded" class="rounded shadow-md">
+                            <img src="{{ session('url') }}" alt="Uploaded" class="rounded shadow-md max-w-full h-auto mx-auto">
                         </div>
                         @endif
                     </div>
@@ -32,18 +35,18 @@
 
                     <div
                         id="drop-area"
-                        class="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-lg p-6 cursor-pointer transition hover:border-blue-500 bg-gray-50 dark:bg-gray-700">
+                        class="flex flex-col items-center justify-center border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-lg p-6 cursor-pointer transition hover:border-blue-500 bg-gray-50 dark:bg-gray-700 text-center">
                         <svg class="w-12 h-12 text-gray-400 dark:text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M7 16V4m0 0l4 4m-4-4L3 8m13 0a4 4 0 014 4v4a4 4 0 01-4 4H5a4 4 0 01-4-4v-4a4 4 0 014-4h2" />
                         </svg>
-                        <p class="text-gray-500 dark:text-gray-300">Klik atau seret foto ke sini</p>
+                        <p class="text-gray-500 dark:text-gray-300 text-sm">Klik atau seret foto ke sini</p>
                         <input id="fileInput" type="file" name="photo" accept="image/*" class="hidden" />
                     </div>
 
                     <div id="preview" class="mt-4 hidden">
                         <p class="text-sm mb-1 dark:text-gray-300">Preview:</p>
-                        <img id="previewImage" class="w-full h-auto rounded shadow" alt="Preview Foto" />
+                        <img id="previewImage" class="w-full max-h-60 object-contain rounded shadow" alt="Preview Foto" />
                     </div>
 
                     <button
@@ -58,16 +61,27 @@
     </div>
 
     <div class="py-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="max-w-7xl mx-auto sm:px-4 px-2 lg:px-8 space-y-6">
             <h2 class="text-xl font-bold mb-4">Foto Observasi: {{ $observasi->nama }}</h2>
 
             @if($photos->count())
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 @foreach ($photos as $photo)
-                <div class="cursor-pointer">
+                <div class="relative group">
                     <img src="{{ asset($photo->file_path) }}" alt="Foto"
-                        class="rounded shadow hover:scale-105 transition duration-300"
+                        class="rounded shadow hover:scale-105 transition duration-300 w-full h-auto cursor-pointer"
                         onclick="openLightbox('{{ asset($photo->file_path) }}')">
+
+                    <form method="POST" action="{{ route('observasi.destroyPhoto', $photo->id) }}"
+                        onsubmit="return confirm('Yakin ingin menghapus foto ini?')"
+                        class="absolute top-2 right-2 hidden group-hover:block">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm hover:bg-red-700 shadow">
+                            &times;
+                        </button>
+                    </form>
                 </div>
                 @endforeach
             </div>
@@ -129,7 +143,7 @@
             reader.readAsDataURL(file);
         }
 
-        // Lightbox Functions
+        // Lightbox
         function openLightbox(url) {
             const lightbox = document.getElementById("lightbox");
             const lightboxImg = document.getElementById("lightbox-img");

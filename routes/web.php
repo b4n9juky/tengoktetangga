@@ -52,6 +52,7 @@ Route::middleware(['auth', 'verified', 'role:pelaksana'])->group(function () {
     Route::post('/observasi/{id}/update', [ObservasiController::class, 'update'])->name('observasi.update');
     Route::get('/observasi/{id}/image', [ObservasiController::class, 'showForm'])->name('observasi.showform');
     Route::post('/observasi/{id}/upload', [ObservasiController::class, 'uploadPhoto'])->name('observasi.imageUpload');
+    Route::delete('/observasi/{id}/deletefoto', [ObservasiController::class, 'destroyPhoto'])->name('observasi.destroyPhoto');
     Route::delete('/observasi/{id}/destroy', [ObservasiController::class, 'destroy'])->name('observasi.destroy');
 
 
