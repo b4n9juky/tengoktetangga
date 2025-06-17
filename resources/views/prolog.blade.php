@@ -104,7 +104,7 @@
                     <li>Siswa peduli terhadap lingkungan sosial</li>
                     <li>Hubungan harmonis madrasah, keluarga, dan masyarakat</li>
                     <li>Gerakan empati berkelanjutan</li>
-                    <li>Portfolio karakter siswa terdokumentasi</li>
+                    <li>Portofolio karakter siswa terdokumentasi</li>
                     <li>Kepercayaan publik terhadap madrasah meningkat</li>
                     <li>Kolaborasi madrasah dan pemerintah dalam penanganan sosial</li>
                 </ul>

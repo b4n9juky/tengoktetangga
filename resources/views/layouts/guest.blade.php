@@ -16,9 +16,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
+
 <body
     class="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center bg-cover bg-center bg-no-repeat"
-    style="background-image: url('https://images.unsplash.com/photo-1503264116251-35a269479413')">
+    style="background-image: url('{{ asset('storage/bg_login.jpeg') }}');">
+    <!-- Gradient overlay hitam transparan -->
+    <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/80 via-black/50 to-black/20"></div>
+
 
 
     <div class="w-full max-w-md px-6 py-8 space-y-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700">
