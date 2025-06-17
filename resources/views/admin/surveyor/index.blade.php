@@ -28,24 +28,9 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                            @php $no = 1; @endphp
+                            @php $no = $responden->firstItem(); @endphp
                             @foreach($responden as $siswa)
-                            @php
-                            $skorTema = [];
-
-                            foreach ($siswa->answers as $answer) {
-                            $tema = $answer->question->tema->nama_tema ?? 'Tanpa Tema';
-
-                            foreach ($answer->choices as $choice) {
-                            if (!isset($skorTema[$tema])) {
-                            $skorTema[$tema] = 0;
-                            }
-
-                            $skorTema[$tema] += $choice->bobot;
-                            }
-                            }
-                            @endphp
-                            @foreach($skorTema as $tema => $skor)
+                            @foreach($siswa->skor_tema as $tema => $skor)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                                 <td class="px-4 py-2">{{$no++}}</td>
                                 <td class="px-4 py-2">{{ $siswa->nama }}</td>
@@ -57,7 +42,7 @@
                                 <td class="px-4 py-2 text-xs text-gray-500 dark:text-gray-400">
 
 
-                                    <form action="{{ route('surveyor.destroy', $answer->surveyor_id) }}" method="POST"
+                                    <form action="{{ route('surveyor.destroy', $siswa->id) }}" method="POST"
                                         class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kondisi ini?');">
                                         @csrf
                                         @method('DELETE')
@@ -74,6 +59,8 @@
                         </tbody>
                     </table>
                 </div>
+                {{ $responden->links() }}
+
 
             </div>
         </div>

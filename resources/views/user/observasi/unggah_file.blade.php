@@ -68,9 +68,9 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 @foreach ($photos as $photo)
                 <div class="relative group">
-                    <img src="{{ asset($photo->file_path) }}" alt="Foto"
+                    <img src="{{ asset('storage/' . $photo->file_path) }}" alt="Foto"
                         class="rounded shadow hover:scale-105 transition duration-300 w-full h-auto cursor-pointer"
-                        onclick="openLightbox('{{ asset($photo->file_path) }}')">
+                        onclick="openLightbox('{{ asset('storage/' . $photo->file_path) }}')">
 
                     <form method="POST" action="{{ route('observasi.destroyPhoto', $photo->id) }}"
                         onsubmit="return confirm('Yakin ingin menghapus foto ini?')"

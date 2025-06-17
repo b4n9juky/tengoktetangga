@@ -9,7 +9,8 @@
                 @if (Auth::user()->role === \App\Enums\UserRole::ADMIN)
                 <div class="shrink-0 flex items-center">
                     <a href="{{route('dashboard.admin')}}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        <h2 class="text-blue-200 dark:text-gray-200  text-xl font-bold">Tengok<span class="text-gray-200 dark:text-yellow-200">Tetangga</span></h2>
+
                     </a>
                 </div>
 

@@ -9,11 +9,13 @@ use App\Models\Answer;
 
 class SurveyorController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    //     $this->middleware('role:admin|siswa');
-    // }
+    public function index()
+    {
+
+        $responden = Surveyor::with('answers.choices', 'answers.question.tema')->paginate(10);
+
+        return view('admin.surveyor.index', compact('responden'));
+    }
 
     // hitung skor per responden
     public function hitungSkor($respondenId)
@@ -49,14 +51,7 @@ class SurveyorController extends Controller
     }
 
 
-    public function index()
-    {
 
-        $responden = Surveyor::with('answers.choices', 'answers.question.tema')->get();
-
-
-        return view('admin.surveyor.index', compact('responden'));
-    }
     public function create()
     {
         return view('surveyors.biodata');

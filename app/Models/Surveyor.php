@@ -15,4 +15,22 @@ class Surveyor extends Model
     {
         return $this->hasMany(Answer::class);
     }
+    public function getSkorTemaAttribute()
+    {
+        $skorTema = [];
+
+        foreach ($this->answers as $answer) {
+            $tema = $answer->question->tema->nama_tema ?? 'Tanpa Tema';
+
+            foreach ($answer->choices as $choice) {
+                if (!isset($skorTema[$tema])) {
+                    $skorTema[$tema] = 0;
+                }
+
+                $skorTema[$tema] += $choice->bobot;
+            }
+        }
+
+        return $skorTema;
+    }
 }

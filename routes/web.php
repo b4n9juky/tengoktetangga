@@ -20,6 +20,13 @@ use App\Http\Controllers\User\ObservasiController;
 Route::get('/', function () {
     return view('beranda');
 });
+Route::get('/pengantar', function () {
+    return view('pengantar');
+});
+Route::get('/prolog', function () {
+    return view('prolog');
+});
+
 
 
 

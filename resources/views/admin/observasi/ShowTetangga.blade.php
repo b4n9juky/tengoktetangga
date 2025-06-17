@@ -56,10 +56,10 @@
 
                                                 <div class="cursor-pointer ">
                                                     <img
-                                                        src="{{ asset($dok->file_path) }}"
+                                                        src="{{ asset('storage/'.$dok->file_path) }}"
                                                         alt="Foto Observasi"
                                                         class="rounded-md shadow-md w-10 h-10 object-cover hover:scale-105 transition-transform duration-300"
-                                                        onclick="openLightbox('{{ asset($dok->file_path) }}')">
+                                                        onclick="openLightbox('{{ asset('storage/'.$dok->file_path) }}')">
                                                 </div>
 
 

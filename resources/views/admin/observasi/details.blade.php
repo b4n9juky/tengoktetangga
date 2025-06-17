@@ -20,10 +20,10 @@
                     @foreach($observasi->dokumentasi as $doc)
                     <div class="cursor-pointer">
                         <img
-                            src="{{ asset($doc->file_path) }}"
+                            src="{{ asset('storage/'.$doc->file_path) }}"
                             alt="Foto Observasi"
                             class="rounded-md shadow-md w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
-                            onclick="openLightbox('{{ asset($doc->file_path) }}')">
+                            onclick="openLightbox('{{ asset('storage/'.$doc->file_path) }}')">
                     </div>
                     @endforeach
                 </div>

@@ -15,25 +15,40 @@
 
 </head>
 
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-secondary text-gray-800 font-sans">
 
     <!-- Navbar -->
     <header class="bg-white shadow sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-green-600">MAN Bontang</h1>
-            <nav class="hidden md:flex space-x-6 items-center text-sm">
-                <a href="#latar-belakang" class="hover:text-green-600 transition">Latar Belakang</a>
-                <a href="#landasan" class="hover:text-green-600 transition">Landasan</a>
-                <a href="#tujuan" class="hover:text-green-600 transition">Tujuan</a>
-                <a href="/login" class="flex items-center gap-1 bg-green-600 text-white px-3 py-1.5 rounded hover:bg-green-700 transition">
-                    <i data-feather="log-in" class="w-4 h-4"></i> Login
-                </a>
-                <a href="/register" class="flex items-center gap-1 border border-green-600 text-green-600 px-3 py-1.5 rounded hover:bg-green-600 hover:text-white transition">
-                    <i data-feather="user-plus" class="w-4 h-4"></i> Register
-                </a>
+            <h1 class="text-2xl font-bold text-primary">MAN Bontang</h1>
+
+            <!-- Hamburger (Mobile) -->
+            <button id="menu-toggle" class="md:hidden text-primary focus:outline-none">
+                <i data-feather="menu" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Nav Links -->
+            <nav id="nav-menu" class="hidden md:flex md:items-center md:space-x-6 text-sm absolute md:static top-16 left-0 w-full md:w-auto bg-white md:bg-transparent shadow md:shadow-none p-4 md:p-0 z-50 flex-col md:flex-row space-y-3 md:space-y-0">
+                <a href="/" class="block py-2 md:py-0 hover:text-green-700 transition">Beranda</a>
+                <a href="/pengantar" class="block py-2 md:py-0 hover:text-green-700 transition">Pengantar</a>
+                <a href="#" class="block py-2 md:py-0 hover:text-green-700 transition">Prolog</a>
+                <a href="#latar-belakang" class="block py-2 md:py-0 hover:text-green-700 transition">Latar Belakang</a>
+                <a href="#landasan" class="block py-2 md:py-0 hover:text-green-700 transition">Landasan</a>
+                <a href="#tujuan" class="block py-2 md:py-0 hover:text-green-700 transition">Tujuan</a>
+
+
+                <div class="flex flex-col md:flex-row gap-2 mt-4 md:mt-0">
+                    <a href="/login" class="flex items-center gap-1 bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800 transition shadow">
+                        <i data-feather="log-in" class="w-4 h-4"></i> Login
+                    </a>
+                    <a href="/register" class="flex items-center gap-1 border border-green-700 text-green-700 px-4 py-2 rounded hover:bg-green-700 hover:text-white transition shadow">
+                        <i data-feather="user-plus" class="w-4 h-4"></i> Register
+                    </a>
+                </div>
             </nav>
         </div>
     </header>
+
 
     <!-- Hero Section -->
     <section class="text-white py-64 text-center relative" style="background-image: linear-gradient(rgba(22, 101, 52, 0.7), rgba(22, 101, 52, 0.7)), url('{{ asset('storage/bg.jpeg') }}'); background-size: cover; background-position: center;">
@@ -55,13 +70,108 @@
                 <a href="/login" class="bg-white text-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition flex items-center gap-2 shadow">
                     <i data-feather="log-in" class="w-5 h-5"></i> Masuk
                 </a>
-                <a href="/register" class="bg-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition flex items-center gap-2 shadow">
+                <a href="/register" class="bg-green-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition flex items-center gap-2 shadow">
                     <i data-feather="user-plus" class="w-5 h-5"></i> Daftar
                 </a>
                 @endif
             </div>
         </div>
     </section>
+
+
+    <!-- Kata Pengantar -->
+    <section class="py-12 px-6 md:px-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
+            <!-- Gambar -->
+            <div class="flex-shrink-0">
+                <img
+                    src="{{ asset('storage/sugiannoor.jpeg') }}"
+                    alt="Kata Pengantar"
+                    class="w-[284px] h-[425px] object-cover rounded-lg shadow-md mx-auto md:mx-0" />
+            </div>
+
+            <!-- Teks -->
+            <div class="md:flex-1">
+                <h3 class="text-2xl font-bold text-green-600 mb-4">Kata Pengantar</h3>
+                <p class="text-gray-700 mb-4">
+                    Puji syukur ke hadirat Allah SWT atas limpahan rahmat dan karunia-Nya, sehingga Program Tengok Tetangga dapat terwujud sebagai bagian dari komitmen MAN Bontang dalam menanamkan nilai-nilai spiritual dan sosial yang bersumber dari ajaran Islam. Shalawat serta salam semoga senantiasa tercurah kepada Nabi Muhammad SAW, suri teladan utama dalam membentuk pribadi yang beriman, berakhlak mulia, dan peduli terhadap sesama.
+
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Program Tengok Tetangga bukanlah kegiatan biasa. Ia lahir dari kesadaran mendalam akan pentingnya mengamalkan ajaran Rasulullah SAW dalam kehidupan bermasyarakat, sebagaimana ditegaskan dalam sabda beliau:
+                <blockquote class="italic border-l-4 pl-4 border-green-600 text-gray-700 bg-white p-4 rounded shadow">
+
+                    ⁠“Barangsiapa yang beriman kepada Allah dan hari akhir, maka hendaklah ia berbuat baik kepada tetangganya.”
+                    (HR. Bukhari dan Muslim)
+                </blockquote>
+
+                </p>
+                <p class="text-gray-700">
+                    Terima kasih kepada semua pihak yang telah mendukung terlaksananya program ini. Semoga Allah SWT meridai setiap langkah kecil yang kita lakukan dalam menebar kebaikan.
+                </p>
+                <!-- Tombol Selanjutnya -->
+                <div class="mt-8 text-left">
+                    <a href="/pengantar"
+                        class="inline-block bg-green-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition duration-300 shadow">
+                        Selanjutnya
+                        <i data-feather="arrow-down-right" class="inline w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <!-- Prolog -->
+    <section class="py-12 px-6 md:px-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
+
+
+            <!-- Teks -->
+            <div class="md:flex-1">
+                <h3 class="text-2xl font-bold text-green-600 mb-4">Prolog</h3>
+                <p class="text-gray-700 mb-4">
+                    Di tengah derasnya arus digital dan kehidupan yang semakin individualis, banyak yang kehilangan arah dan makna kehadiran sesama. Remaja terjebak dalam krisis identitas, lansia hidup dalam kesendirian. Dari keresahan inilah, MAN Bontang meluncurkan Program “Tengok Tetangga”, sebagai upaya sederhana namun penuh makna untuk menumbuhkan empati, gotong royong, dan kepedulian sosial sejak dini.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Program ini bersumber dari pesan Ilahi dan teladan Nabi:
+                </p>
+                <blockquote class="italic border-l-4 pl-4 border-green-600 text-gray-700 bg-white p-4 rounded shadow">
+
+                    ⁠"Berbuat baiklah kepada tetangga yang dekat dan tetangga yang jauh..."
+                    (QS. An-Nisa: 36)
+
+                    "Barangsiapa yang beriman kepada Allah dan hari akhir, maka hendaklah ia berbuat baik kepada tetangganya."
+                    (HR. Bukhari dan Muslim)
+                </blockquote>
+
+
+                <div class="mt-8 text-left">
+                    <a href="/prolog"
+                        class="inline-block bg-green-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-800 transition duration-300 shadow">
+                        Selanjutnya
+                        <i data-feather="arrow-down-right" class="inline w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+
+
+            </div>
+
+
+
+            <!-- Gambar -->
+            <div class="flex-shrink-0">
+                <img
+                    src="{{ asset('storage/lena.jpeg') }}"
+                    alt="Kata Pengantar"
+                    class="w-[284px] h-[425px] object-cover rounded-lg shadow-md mx-auto md:mx-0" />
+            </div>
+        </div>
+
+    </section>
+
+
 
     <!-- Latar Belakang -->
     <section id="latar-belakang" class="py-12 px-6 md:px-20 bg-white">
@@ -121,9 +231,16 @@
         <p>&copy; 2025 MAN Bontang. Semua Hak Dilindungi.</p>
     </footer>
 
+
     <script>
         feather.replace();
+
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('hidden');
+        });
     </script>
+
 </body>
 
 </html>
