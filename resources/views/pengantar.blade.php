@@ -47,7 +47,7 @@
         <div class="container mx-auto text-center">
             <img src="{{ asset('storage/sugiannoor.jpeg') }}" alt="Kepala MAN Bontang"
                 class="w-40 h-40 object-cover rounded-full mx-auto shadow-lg border-4 border-white mb-4">
-            <h2 class="text-3xl font-bold text-green-700">Prolog</h2>
+            <h2 class="text-3xl font-bold text-green-700">Kata Pengantar</h2>
             <p class="text-gray-600 mt-2 text-sm">Sugiannoor, S. Pd. I., M. Pd. – Kepala MAN Bontang</p>
         </div>
     </section>
